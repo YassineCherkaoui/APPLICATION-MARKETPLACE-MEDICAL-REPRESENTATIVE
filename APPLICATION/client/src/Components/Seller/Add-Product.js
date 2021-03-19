@@ -6,40 +6,40 @@ function AddSellerProduct() {
 
 
     return(
-<body className="staytunt">
-<div className="container cont">
 
-<div className="form-div">
-  <div className="title">
-    <h1 className="text-uppercase title-text"> ADD Product</h1>
-  </div>
-
-  <div className="form-container">
-    <form action="#" className="text-uppercase">
-      <label for="fname">Product Name:<br></br>
-        <input type="text" className="input"required/>
-      </label><br></br>
-      <label for="fname">QTY:<br></br>
-        <input type="text" className="input"required/>
-      </label><br></br>
-      <label for="fname">Price:<br></br>
-        <input type="text" className="input"required/>
-      </label><br></br>
-      <label for="fname">Image:<br></br></label>
-      <input type="file"required/>
-
-
-      <label for="submit">
-        <button type="submit" className="text-uppercase button">Submit</button>{" "}
-        {/* <br></br> */}
-        <a href="/SellerProduct" className="text-uppercase button">Cancel</a>
-      </label><br></br>
-    </form>
-  </div>
-
-</div>
-</div>
-</body>
+      <body class="staytunt">
+      <div class="container cont">
+		<div class="row">
+			<div class="col-sm-8 col-sm-offset-2 well">
+				<div class="col-sm-12 form-legend">
+					<h2>ADD Product</h2>
+				</div>
+				<div class="col-sm-12 form-column">
+					<form action="success" method="post">
+						<div class="form-group">
+							<label for="fname">Product Name:</label>
+							<input type="text" id="Pname" name="Pname" class="form-control" required/>
+						</div>
+						<div class="form-group">
+							<label for="lname">QTY:</label>
+							<input type="text" id="qty" name="qty" class="form-control"required/>
+						</div>
+						<div class="form-group">
+							<label for="country">Price</label>
+							<input type="number" id="Price" name="Price" class="form-control" required/>
+						</div>
+						<div class="form-group">
+							<label for="zip-code">Images:</label>
+							<input type="file" id="Image" name="Image" class="form-control" required/>
+						</div>
+            <button type="submit" class='btn'>ADD</button>
+            <a  href="/SellerProduct" class='btn'>Back</a>
+					</form>
+				</div>
+			</div>
+      </div>
+		</div>
+    </body>
           )
         }
         export default AddSellerProduct;

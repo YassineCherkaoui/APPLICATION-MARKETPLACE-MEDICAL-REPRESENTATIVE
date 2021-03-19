@@ -22,4 +22,30 @@ module.exports = function (app) {
 
     //-------------------------Logout superAdmin-----------------------------
     app.get('/SuperAdmin/logout', superAdmin.SuperAdminLogout);
+
+    //___________________________delete admin______________________
+    app.delete('/admin/delete/:id', superAdmin.deleteAdmin);
+
+    
+    //___________________________delete admin______________________
+    app.delete('/seller/delete/:id', superAdmin.deleteSeller);
+
+    
+    //________________________updating admin____________________
+    app.put('/admin/update/:id', superAdmin.updateadmin);
+
+    // ______________________get category by id__________________
+    app.get('/admin/:id', superAdmin.admin);
+
+    //________________________updating Seller____________________
+    app.put('/seller/update/:id', superAdmin.updateSeller);
+
+
+    // ______________________get category by id__________________
+    app.get('/seller/:id', superAdmin.seller);
+
+
+
+
+
 }

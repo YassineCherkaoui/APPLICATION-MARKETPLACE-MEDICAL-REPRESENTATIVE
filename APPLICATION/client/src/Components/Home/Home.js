@@ -12,8 +12,7 @@ const Home = () => (
       </div>
       <nav>
       <ul id="MenuItems">
-        <li><a href="index.html">Login</a></li>
-        <li><a href="product.html">SignUp</a></li>
+        <li><a href="/signUp">SignUp</a></li>
       </ul>
     </nav>
     </div>

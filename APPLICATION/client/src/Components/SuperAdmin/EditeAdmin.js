@@ -3,8 +3,8 @@ import'./styles/addstyle.css';
 // import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
-import React, { useState } from 'react';
-function AddAdmins() {
+import React, { useState,useEffect } from 'react';
+function EdiAdmin(props) {
 
 	const history=useHistory();
 	const [FirstName, setFirstName] = useState();
@@ -12,20 +12,45 @@ function AddAdmins() {
 	const [Email, setEmail] = useState();
 	const [login, setlogin] = useState();
 	const [Password, setPassword] = useState();
-	const handleSubmit = (e) => {
-	
-		  e.preventDefault();
-	  const admindata = {FirstName,LastName,Email,login,Password};
-			  axios.post(`http://localhost:8080/admin/add`,admindata)
-				  .then(res => {
-					  if(res.error){
-					  return false
-				}else{
-					 console.log(res.data);
-			 history.push('/AdminList')
-				}
-			})
-		}
+    const idadmin=localStorage.getItem('idadmin');
+    
+//   let idadmin;
+  // ---------------------get question to update-----------------------------
+     useEffect(()=>{
+  
+      axios.get(`http://localhost:8080/admin/${idadmin}`)
+      .then(function (response) {
+       
+        setFirstName(response.data.FirstName)
+        setLastName(response.data.LastName)
+        setEmail(response.data.Email)
+        setlogin(response.data.login)
+        // const [, setNameCategory] = useState("");
+      
+      }).catch(function (err) {
+        console.log(err);
+    });
+    
+    })
+  // -----------------------update question---------------------------
+      const handleSubmit = (e) => {
+          e.preventDefault();
+      const Admin = {FirstName,LastName,Email,login,Password};
+  
+      axios.put(`http://localhost:8080/admin/update/${idadmin}`,Admin)
+        .then(res => {
+          if(res.error){
+            return false
+          }else{
+            console.log(res.data);
+            history.push('/AdminList')
+          }
+         
+        })
+  
+    }
+
+  
 
 
     return(
@@ -72,4 +97,4 @@ function AddAdmins() {
     </body>
           )
         }
-        export default AddAdmins;
+        export default EdiAdmin;

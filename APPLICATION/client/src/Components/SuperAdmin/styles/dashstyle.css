@@ -907,3 +907,32 @@ table.table .avatar {
 .table-a:hover{
         background-color: #41a56a;
 }
+.logoutdash{
+    margin-top: 268%;
+    border: 1px solid;
+    padding: 9px 70px;
+    background-color: transparent;
+}
+.logoutdash:hover{
+    background-color: #41a56a;
+}
+
+.btn-closemsg{
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+.btn-closemsg:hover{
+    background-color: #23be28;
+}
+.displaymsg{
+    background-color: transparent;
+}
+.displaymsg{
+    border: none;
+}

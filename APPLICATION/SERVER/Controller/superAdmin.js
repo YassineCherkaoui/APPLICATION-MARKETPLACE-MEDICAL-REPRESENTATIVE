@@ -137,6 +137,162 @@ if(superadmin){
 }).catch((err) => res.status(400).json("Error :" + err));
 }
 
+//___________________________delete Admin______________________
+exports.deleteAdmin = (req, res) => {
+  const {id} = req.params;
+  Admin.findOneAndDelete({_id: id})
+      .then(admin => {
+          if(!admin) {
+            res.status(404).json({
+              message: "Does Not exist a admin with id = " + id,
+              error: "404",
+            });
+          }
+          res.status(200).json({});
+      }).catch(err => {
+          return res.status(500).send({
+            message: "Error -> Can NOT delete a categorie with id = " + id,
+            error: err.message
+          });
+      });
+};
+
+//________________________updating Admin____________________
+
+exports.updateadmin = (req, res) => {
+  bcrypt.hash(req.body.Password, 10, function(err, hashPassword) {
+  if (err) {
+    res.json({error : err})       
+  }
+  const FirstName = req.body.FirstName;
+const LastName = req.body.LastName;
+const Email = req.body.Email;
+const login = req.body.login;
+const Password = hashPassword;
+// Validate
+if(!FirstName || !LastName || !Email || !login || !Password) {
+return res.status(400).send({
+    message: "filde content can not be empty"
+});
+}
+  Admin.updateOne(
+    {_id: req.params.id},
+    {
+  FirstName: req.body.FirstName,
+  LastName: req.body.LastName,
+  Email: req.body.Email,
+  login: req.body.login,
+  Password: hashPassword,
+
+})
+
+.then(Admin => {
+  if(!Admin) {
+
+    return res.status(404).send({
+      message: "Admin not found with id " + req.params._id
+  });
+
+  }
+  res.status(201).json("Admin UPDATED successfully");
+}).catch(err => {
+
+  if(err.kind === 'ObjectId') {
+    return res.status(404).send({
+        message: "Admin not found with id " + req.params.id
+    });                
+}
+return res.status(500).send({
+    message: "Error updating Admin with id " + req.params.id
+  });
+  })
+});
+}
+
+
+// ______________________get admin by id__________________
+exports.admin = (req, res) => {
+  Admin.findById(req.params.id)
+      .then(Admin => {
+        res.status(200).json(Admin);
+      }).catch(err => {
+          if(err.kind === 'ObjectId') {
+              return res.status(404).send({
+                  message: "Admin not found with id " + req.params.id,
+                  error: err
+              });                
+          }
+          return res.status(500).send({
+              message: "Error retrieving Admin with id " + req.params.id,
+              error: err
+          });
+      });
+};
+
+
+
+
+
+//___________________________delete seller______________________
+exports.deleteSeller = (req, res) => {
+  const {id} = req.params;
+  Seller.findOneAndDelete({_id: id})
+      .then(seller => {
+          if(!seller) {
+            res.status(404).json({
+              message: "Does Not exist a seller with id = " + id,
+              error: "404",
+            });
+          }
+          res.status(200).json({});
+      }).catch(err => {
+          return res.status(500).send({
+            message: "Error -> Can NOT delete a seller with id = " + id,
+            error: err.message
+          });
+      });
+};
+
+
+
+
+
+//________________________updating Seller____________________
+exports.updateSeller = (req, res) => {
+  // Find Seller By ID and update it
+  Seller.updateOne(
+                   {_id: req.params.id},
+                    {
+                      status : req.body.status,
+                      type : req.body.type
+                    }
+                  )
+  .then(() => res.status(201).json("Seller updated successfully"))
+  .catch((err) => res.status(400).json("Error :" + err));
+};
+// ______________________get seller by id__________________
+exports.seller = (req, res) => {
+  Seller.findById(req.params.id)
+      .then(Seller => {
+        res.status(200).json(Seller);
+      }).catch(err => {
+          if(err.kind === 'ObjectId') {
+              return res.status(404).send({
+                  message: "Seller not found with id " + req.params.id,
+                  error: err
+              });                
+          }
+          return res.status(500).send({
+              message: "Error retrieving Seller with id " + req.params.id,
+              error: err
+          });
+      });
+};
+
+
+
+
+
 //-------------------------Logout Admin---------------------------
 
 exports.SuperAdminLogout = (req, res) => {

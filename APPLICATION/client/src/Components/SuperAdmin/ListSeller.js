@@ -1,7 +1,73 @@
 import'./styles/dashstyle.css';
 // import { Button } from 'react-bootstrap';
 // import React, { useState } from 'react';
+import {useEffect, useState} from 'react';
+import { Link,useHistory  } from 'react-router-dom';
+import axios from 'axios';
+import $ from 'jquery'; 
+import filetext from './text.txt';
+// import { Document,pdfjs,Page   } from 'react-pdf'
+// pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 function ListSeller() {
+
+  const history = useHistory();
+  //----------- show gategory added in datatable------------
+  const [seller , setseller] = useState(null);
+  useEffect(()=>{
+  
+    axios.get(`http://localhost:8080/seller`)
+      .then(function (response) {
+        setseller(response.data)
+      }).catch(function (err) {
+        console.log(err);
+    });
+    
+  },[])
+  
+// ---------------Delete admin-------------------
+
+const deleteSeller = (id)=>{
+  var yesno = window.confirm("Are You Sure?");
+  if (yesno) {   
+axios.delete(`http://localhost:8080/seller/delete/${id}`)
+.then(function (response) {
+  window.location.reload();
+  console.log('item was deleted Succesfully ... ');
+  
+})
+}
+
+}
+
+const getIdSeller = (id)=>{
+localStorage.setItem('idseller',id);
+history.push('/editseller');
+
+}
+$(document).ready(function(){
+  $(".displaymsg").click(function(){
+    $(".modal-body").load(filetext);
+  });
+});
+
+
+
+// const [numPages, setNumPages] = useState(null);
+//   const [pageNumber, setPageNumber] = useState(1);
+
+//   function onDocumentLoadSuccess({ numPages }) {
+//     setNumPages(numPages);
+//   }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -112,36 +178,68 @@ function ListSeller() {
 				<thead>
 					<tr>
             <th>Username</th>
-						<th>Type</th>
-						<th>Password</th>
 						<th>Status</th>
-            <th>Product</th>
+						<th>Type</th>
+						<th>docummant</th>
+            <th>Action</th>
+            {/* <th>Product</th>
             <th>Bought</th>
             <th>Price</th>
-						<th>Actions</th>
+						<th>Actions</th> */}
 					</tr>
 				</thead>
-				<tbody>
-					<tr>
-          <td>Yassine</td>
-						<td>Starter</td>
-						<td>Yassine</td>
-						<td>Inactive</td>
-            <td>10</td>
-            <td>2</td>
-            <td>1000MAD</td>
-						<td>
-							<a href="/addadmins" className="edit" data-toggle="modal"><i className="fa fa-edit"></i></a>
-							<a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="fa fa-user-times"></i></a>
-						</td>
-					</tr>
-				</tbody>
+        { seller && seller.map(item =>(
+                <tbody>
+                <tr>
+        <td>{item.Username}</td>
+          <td>{item.type}</td>
+          <td>{item.status}</td>
+          <button data-toggle="modal" data-target="#exampleModal" class="displaymsg"> <td> {item.docummant}</td></button>
+          <td>		
+          <Link  onClick={()=> getIdSeller(item._id)} class="edit" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></Link>
+          <Link onClick={() => deleteSeller(item._id)} class="delete" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></Link>
+
+        </td>
+        </tr>
+             </tbody>
+             ))}
 			</table>
       {/* <a className="table-a" variant="primary" href="/addadmins"><i className="fa fa-user-plus"></i>Button</a> */}
+      {/* <Document file={filetext} 
+      /> */}
+      {/* <Page /> */}
+      {/* <Document /> */}
+      {/* <div>
+      <Document
+        file={filetext}
+        onLoadSuccess={onDocumentLoadSuccess}
+      >
+        <Page pageNumber={pageNumber} />
+      </Document>
+      <p>Page {pageNumber} of {numPages}</p>
+    </div> */}
+      </div>
+      </div>
+      </div>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+      <div class="modal-body">
+        {/* Msgfromdoc */}
       </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-closemsg" data-dismiss="modal">Close</button>
       </div>
+    </div>
+  </div>
+</div>
                 </main>
               </div>
         

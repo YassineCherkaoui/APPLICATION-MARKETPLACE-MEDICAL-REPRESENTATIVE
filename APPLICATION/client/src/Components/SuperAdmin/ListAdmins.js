@@ -1,10 +1,49 @@
 import'./styles/dashstyle.css';
 // import { Button } from 'react-bootstrap';
 // import React, { useState } from 'react';
-function ListAdmins() {
+import {useEffect, useState} from 'react';
+import { Link,useHistory  } from 'react-router-dom';
+import axios from 'axios';
+function ListAdmins(props) {
 
+  const history = useHistory();
+//----------- show gategory added in datatable------------
+const [admin , setAdmin] = useState(null);
+useEffect(()=>{
 
+  axios.get(`http://localhost:8080/admin`)
+    .then(function (response) {
+      setAdmin(response.data)
+    }).catch(function (err) {
+      console.log(err);
+  });
+  
+},[])
 
+// ---------------Delete admin-------------------
+
+const deleteadmin = (id)=>{
+  var yesno = window.confirm("Are You Sure?");
+  if (yesno) {   
+axios.delete(`http://localhost:8080/admin/delete/${id}`)
+.then(function (response) {
+  window.location.reload();
+  console.log('item was deleted Succesfully ... ');
+  
+})
+}
+
+}
+const getIdadmin = (id)=>{
+localStorage.setItem('idadmin',id);
+history.push('/EditeAdmin');
+
+}
+// const logOut =()=>{
+
+//   localStorage.removeItem('token')
+//   this.props.history.push('/superAdmin');
+//   }
     return(
       
         <body>
@@ -31,6 +70,12 @@ function ListAdmins() {
                       <a href="/ListSeller"><li className="subList__item">List</li></a>
                     </li>
                     </ul>
+                    <Link > <a href="/SuperAdmin" >
+            <div className="logoutdash">
+            LogOut
+            </div>
+            </a>
+            </Link>
                   </div>
                 </aside>
               
@@ -115,23 +160,25 @@ function ListAdmins() {
 						<th>Last Name</th>
 						<th>Email</th>
 						<th>Login</th>
-						<th>Password</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr>
-          <td>Yassine</td>
-						<td>Cherkaoui</td>
-						<td>yassin@gmail.com</td>
-						<td>Yassine</td>
-						<td>Yassine</td>
-						<td>
-							<a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="fa fa-edit"></i></a>
-							<a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="fa fa-user-times"></i></a>
-						</td>
-					</tr>
-				</tbody>
+
+        { admin && admin.map(item =>(
+                <tbody>
+                <tr>
+        <td>{item.FirstName}</td>
+          <td>{item.LastName}</td>
+          <td>{item.Email}</td>
+          <td>{item.login}</td>
+          <td>		
+          <Link  onClick={()=> getIdadmin(item._id)} class="edit" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></Link>
+          <Link onClick={() => deleteadmin(item._id)} class="delete" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></Link>
+
+        </td>
+        </tr>
+             </tbody>
+             ))}
 			</table>
       <a className="table-a" variant="primary" href="/addadmins"><i className="fa fa-user-plus"></i>Button</a>
 

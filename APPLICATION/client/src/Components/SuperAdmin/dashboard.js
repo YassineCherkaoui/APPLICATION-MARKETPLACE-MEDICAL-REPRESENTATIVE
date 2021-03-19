@@ -33,6 +33,11 @@ function Question() {
               <a href="/ListSeller"><li className="subList__item">List</li></a>
             </li>
             </ul>
+            <a href="/Logout" >
+            <div className="logoutdash">
+            LogOut
+            </div>
+            </a>
           </div>
         </aside>
       
