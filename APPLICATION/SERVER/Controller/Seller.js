@@ -4,7 +4,7 @@ const Seller = require('../Models/Seller.models');
 const jwt=require('jsonwebtoken');
 //A library to help you hash passwords.
 const bcrypt=require('bcrypt');
-//------------------------SuperAdmin authentication---------------------
+//------------------------Seller authentication---------------------
 exports.SellerADD = (req, res) => {
     //10==saltRounds
     bcrypt.hash(req.body.Password, 10, function (err, hashPassword) {
@@ -31,6 +31,81 @@ exports.SellerADD = (req, res) => {
             .catch((err) => res.status(400).json("Error :" + err));
     });
 }
+
+
+//-------------------------login User-----------------------------
+
+exports.SellerLogin = (req, res) => {
+
+    let Username = req.body.Username;
+    let Password = req.body.Password;
+
+  Seller.findOne({
+    Username: Username
+    })
+    .then(Seller => {
+
+      if (Seller) {
+        bcrypt.compare(Password, Seller.Password, function (err, result) {
+          if (err) {
+            res.json({
+              error: err
+            })
+          }
+
+          if (result) {
+
+      console.log(result.status);
+
+
+            if(result.status == "InActive"){
+                res.json({
+                    message: 'Khedaaaaaaaam !!'
+                  })
+            }
+            
+            
+            
+            else {
+            let token = jwt.sign({
+                Username: Username
+            }, 'tokenkey', (err, token) => {
+              res.cookie("token", token)
+              res.json({
+                token: token
+              })
+            })
+          }
+
+
+        }
+        
+        
+        
+            
+        else {
+            res.json({
+              message: 'password incorrect try again !!'
+            })
+          }
+        })
+      } else {
+        res.json({
+          message: 'Admin not found'
+        })
+      }
+    }).catch((err) => res.status(400).json("Error :" + err));
+}
+
+  
+
+
+
+
+
+
+
+
 
 //______________________get all Seller_____________________ 
 exports.SellerList = (req, res) => {

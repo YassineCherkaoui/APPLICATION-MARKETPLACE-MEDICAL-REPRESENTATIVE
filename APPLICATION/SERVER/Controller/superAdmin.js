@@ -123,11 +123,8 @@ if(superadmin){
               token : token
           })
         })
-     }else{
-         res.json({
-             message : 'password incorrect try again !!'
-         })
      }
+     
   })
 }else{
   res.json({

@@ -43,6 +43,7 @@ app.get('/', (req,res)=>{
 
 require('./Router/superadmin.router')(app);
 require('./Router/seller.router')(app);
+require('./Router/Admin.router')(app);
 
 
 const Port = process.env.PORT || 8080;

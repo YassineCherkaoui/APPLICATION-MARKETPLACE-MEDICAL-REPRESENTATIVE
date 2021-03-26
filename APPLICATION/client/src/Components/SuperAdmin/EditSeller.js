@@ -7,8 +7,10 @@ import React, { useState,useEffect } from 'react';
 function EditeSellers() {
 
 	const history=useHistory();
-	const [status, setStatus] = useState();
-	const [type, setType] = useState();
+	// const [status, setStatus] = useState();
+	// const [type, setType] = useState();
+	const [ setStatus] = useState();
+	const [ setType] = useState();
 	const idseller=localStorage.getItem('idseller');
 	let idSeller;
 	let idSeller2;

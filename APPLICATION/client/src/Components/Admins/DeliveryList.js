@@ -2,7 +2,74 @@ import'./Styles/Dashboard.css';
 import'./Styles/adddelivry.css';
 // import { Button } from 'react-bootstrap';
 // import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
+import axios from 'axios';
+import React, { useState } from 'react';
+import {useEffect} from 'react';
+import { Link  } from 'react-router-dom';
 function DelivryList() {
+
+	// const history=useHistory();
+	// const [Delivry_Name, setDelivry_Name] = useState();
+	// const [Type, setType] = useState();
+  const history = useHistory();
+//----------- show gategory added in datatable------------
+const [Delivry_Name, setDelivry_Name] = useState();
+const [Delivry_Name2,setDelivry_Name2] = useState();
+// const [ setType] = useState();
+let idDelivry;
+useEffect(()=>{
+  axios.get(`http://localhost:8080/Delivry`)
+    .then(function (response) {
+      setDelivry_Name2(response.data)
+      // setType(response.data)
+    }).catch(function (err) {
+      console.log(err);
+  });
+    
+},[])
+
+const handleSubmit = (e) => {
+	
+  e.preventDefault();
+  const id = idDelivry.value;
+const Delivrydata = {Delivry_Name,Type:id};
+    axios.post(`http://localhost:8080/Delivry/add`,Delivrydata)
+      .then(res => {
+        if(res.error){
+        return false
+    }else{
+       console.log(res.data);
+       window.location.reload();
+    }
+  },[])
+}
+
+
+
+
+
+
+// ---------------Delete Delivry-------------------
+
+const deleteDelivry = (id)=>{
+  var yesno = window.confirm("Are You Sure?");
+  if (yesno) {   
+axios.delete(`http://localhost:8080/Delivry/delete/${id}`)
+.then(function (response) {
+  window.location.reload();
+  console.log('Delivry was deleted Succesfully ... ');
+  
+})
+}
+
+}
+
+const getIdDelivry = (id)=>{
+  localStorage.setItem('idadmin',id);
+  history.push('/EditeAdmin');
+  
+  }
 
 
 
@@ -114,27 +181,21 @@ function DelivryList() {
             <th>Type</th>
 						<th>Actions</th>
 					</tr>
-				</thead>
-				<tbody>
-					<tr>
-                    <td>1</td>
-          <td>Yassine Cherkaoui</td>
-						<td>Standard</td>
-						<td>
-							<a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="fa fa-edit"></i></a>
-							<a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="fa fa-user-times"></i></a>
-						</td>
-					</tr>
-                    <tr>
-                    <td>2</td>  
-          <td>Yassine2 Cherkaoui2</td>
-						<td>Express </td>
-						<td>
-							<a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="fa fa-edit"></i></a>
-							<a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="fa fa-user-times"></i></a>
-						</td>
-					</tr>
-				</tbody>
+			</thead>        
+        { Delivry_Name2 && Delivry_Name2.map(item =>(
+                <tbody>
+                <tr>
+        <td>1</td>
+          <td>{item.Delivry_Name}</td>
+          <td>{item.Type}</td>
+          <td>		
+          <Link  onClick={()=> getIdDelivry(item._id)} class="edit" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></Link>
+          <Link onClick={() => deleteDelivry(item._id)} class="delete" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></Link>
+
+        </td>
+        </tr>
+             </tbody>
+             ))}
 			</table>
 
 
@@ -142,10 +203,11 @@ function DelivryList() {
 
 <div class="formdelevery">
   <h2>Add Delivry Man</h2>
-  <form action="/">
+  <form data-parsley-validate onSubmit={handleSubmit}>
     <div class="left section">
-    <input type="text" name="name" placeholder="Delevery Name" required/>
-      <select name="" id="">
+    <input type="text" name="name" placeholder="Delevery Name" required value={Delivry_Name}
+                onChange={e => setDelivry_Name(e.target.value)}/>
+      <select name="" id="" ref={(e) => idDelivry = e}>
 		<option value="Standard">Standard</option>
 		<option value="Express">Express</option>
 	</select>

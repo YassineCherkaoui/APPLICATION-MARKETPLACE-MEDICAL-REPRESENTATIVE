@@ -105,23 +105,21 @@ function ProblemOrder() {
 	<div className="user-data">
 	  <h4>YASSINE</h4>
 	  <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=Yassin@gmail.com"><p>Yassin@gmail.com</p></a>
-    <button className="btn-read-problem" data-toggle="modal" data-target="#exampleModal">Read Problem</button>
+    <a href="https://wa.me/0621114160"><p>+212621114160</p></a>
 	  </div>	
   </li>
   <li  style = {{position: 'relative'}} >
 	<div className="user-image"><img src={user} alt=""/></div>
 	<div className="user-data">
 	  <h4>YASSINE</h4>
-	  <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=Yassin@gmail.com"><p>Yassin@gmail.com</p></a>
-    <button className="btn-read-problem" data-toggle="modal" data-target="#exampleModal">Read Problem</button>
+    <a href="https://wa.me/0621114160"><p>+212621114160</p></a>
 	  </div>	
   </li>
   <li  style = {{position: 'relative'}} >
 	<div className="user-image"><img src={user} alt=""/></div>
 	<div className="user-data">
 	  <h4>YASSINE</h4>
-	  <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=Yassin@gmail.com"><p>Yassin@gmail.com</p></a>
-    <button className="btn-read-problem" data-toggle="modal" data-target="#exampleModal">Read Problem</button>
+    <a href="https://wa.me/0621114160"><p>+212621114160</p></a>
 	  </div>	
   </li>
 
@@ -130,25 +128,6 @@ function ProblemOrder() {
 </div>
 
 
-{/* Modal */}
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Client Name: Yassine</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Problem with Region
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="closemodel" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
       </div>
 
 </body>

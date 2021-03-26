@@ -19,6 +19,7 @@ import AdminOrder from '../Admins/Order';
 import ConfirmOrder from '../Admins/confirmorder';
 import ProblemOrder from '../Admins/ProblemOrder';
 import Delivery from '../Admins/DeliveryList';
+import LoginAdmin from '../Admins/login';
 
 // ______________SELLERS__________________
 import Loginseller from '../Seller/loginseller';
@@ -52,15 +53,16 @@ function Routes() {
           <Route  path="/ListSeller" exact component={ListSeller}/> 
           <Route  path="/editseller" exact component={EditeSeller}/> 
       {/* // ______________Admins Route__________________ */}
-      <PrivateRoute  path="/Admin" exact component={AdminDash}/> 
+      <PrivateRoute  path="/Admin" exact component={LoginAdmin}/> 
+      <PrivateRoute  path="/DashboardAdmin" exact component={AdminDash}/> 
       <PrivateRoute  path="/ClientOrder" exact component={AdminOrder}/> 
       <PrivateRoute  path="/ConfirmOrder" exact component={ConfirmOrder}/>
       <PrivateRoute  path="/ProblemOrder" exact component={ProblemOrder}/>  
       <PrivateRoute  path="/Delivery" exact component={Delivery}/>  
       {/* // ______________Seller Route__________________ */}
-      <PrivateRoute  path="/LoginSeller" exact component={Loginseller}/> 
+      <PrivateRoute  path="/seller" exact component={Loginseller}/> 
       <PrivateRoute  path="/becomeseller" exact component={BecomeSeller}/>  
-      <PrivateRoute  path="/seller" exact component={DashboardSeller}/>  
+      <PrivateRoute  path="/DashboardSeller" exact component={DashboardSeller}/>  
       <PrivateRoute  path="/Statistics" exact component={Statistics}/>  
       <PrivateRoute  path="/SellerProduct" exact component={SellerProduct}/> 
       <PrivateRoute  path="/AddSellerProduct" exact component={AddSellerProduct}/> 

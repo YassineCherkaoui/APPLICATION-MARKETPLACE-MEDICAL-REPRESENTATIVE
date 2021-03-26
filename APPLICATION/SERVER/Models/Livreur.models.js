@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Delivery = new Schema({
-        idLiv: {
+        Delivry_Name: {
             type: String,
             required: true,
             trim: true,
         },
-        LivName: {
+        Type: {
             type: String,
             required: true,
             trim: true,
