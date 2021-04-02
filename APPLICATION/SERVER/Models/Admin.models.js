@@ -26,6 +26,11 @@ const Admin = new Schema(
             type : String,
             required : true,
             trim : true,
+        },
+        role : {
+            type : String,
+            required : true,
+            trim : true,
         }
     },
     {

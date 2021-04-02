@@ -1,6 +1,7 @@
 //__________________CALL MODEL____________________
 const Admin = require('../Models/Admin.models');
 const Delivery = require('../Models/Livreur.models');
+const Category = require('../Models/categories.models');
 //Call Packages JSON Web Token & BCRYPT
 const jwt = require('jsonwebtoken');
 //A library to help you hash passwords.
@@ -35,12 +36,14 @@ exports.AdminADD = (req, res) => {
     const Email = req.body.Email;
     const login = req.body.login;
     const Password = hashPassword;
+    const role = "Admin";
     const AdminPush = new Admin({
       FirstName,
       LastName,
       Email,
       login,
-      Password
+      Password,
+      role
     });
     AdminPush
       .save()
@@ -110,7 +113,8 @@ exports.DelivryList = (req, res) => {
 exports.DeliveryAdd = (req, res) => {
   const delivery = new Delivery({
     Delivry_Name: req.body.Delivry_Name,
-    Type: req.body.Type
+    Type: req.body.Type,
+    role : "Delivry"
   });
   //Save
   delivery.save().then(data => {
@@ -148,7 +152,8 @@ exports.UpdateDelivery = (req, res) => {
       _id: req.params.id
     }, {
       Delivry_Name: req.body.Delivry_Name,
-      Type: req.body.Type
+      Type: req.body.Type,
+      role : "Delivry"
     })
     .then(() => res.status(201).json("Delivery updated successfully"))
     .catch((err) => res.status(400).json("Error :" + err));
@@ -174,3 +179,13 @@ exports.DeleteDelivery = (req, res) => {
       });
 };
 
+//___________________________Add Categories_____________________
+exports.CatyAdd = (req, res) => {
+  const category = new Category({
+    CategoryName: req.body.CategoryName,
+  });
+  //Save
+  category.save()
+  .then(() => res.status(201).json("Categories ADDED successfully"))
+  .catch((err) => res.status(400).json("Error :" + err));
+};

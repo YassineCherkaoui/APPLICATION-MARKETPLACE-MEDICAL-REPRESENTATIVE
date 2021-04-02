@@ -17,7 +17,7 @@ app.use(bodyPrser.json())
 
 const logWinston = require('../SERVER/log/log');
 
-
+const multer = require('multer');
 
 
 
@@ -44,9 +44,34 @@ app.get('/', (req,res)=>{
 require('./Router/superadmin.router')(app);
 require('./Router/seller.router')(app);
 require('./Router/Admin.router')(app);
-
+require('./Router/Client.router')(app);
+require('./Router/Email')(app);
 
 const Port = process.env.PORT || 8080;
 app.listen(Port,()=>{
     console.log("Your Server is on ",`http://localhost:${Port}`);
 })
+
+
+
+
+
+
+
+
+
+
+
+
+app.use(express.static(__dirname + '/public'));
+
+// const storage = multer.diskStorage({
+//     destination: function(req, file, cb) {
+//         cb(null, 'uploads/');
+//     },
+
+//     // By default, multer removes file extensions so let's add them back
+//     filename: function(req, file, cb) {
+//         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+//     }
+// });

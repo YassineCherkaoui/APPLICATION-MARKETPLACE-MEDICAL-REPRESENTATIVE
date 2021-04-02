@@ -17,9 +17,12 @@ module.exports = function (app) {
     app.post('/Delivry/add', Admin.DeliveryAdd);
     //-------------------------Delivry Update-----------------------------
     app.put('/Delivry/update/:id', Admin.DeliveryAdd);
-    //-------------------------Delivry Update-----------------------------
+    //-------------------------Delivry delete-----------------------------
     app.delete('/Delivry/delete/:id', Admin.DeleteDelivery);
 
     // ______________________get delivry by id__________________
         app.get('/Delivry/:id', Admin.getDeliveryById);
+
+            //__________________________add Admins____________________
+    app.post('/categories/add', Admin.CatyAdd);
 }

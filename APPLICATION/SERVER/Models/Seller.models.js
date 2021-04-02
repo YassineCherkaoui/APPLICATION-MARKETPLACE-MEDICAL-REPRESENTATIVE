@@ -28,6 +28,11 @@ const Seller = new Schema(
             required : true,
             trim : true,
         },
+        role : {
+            type : String,
+            required : true,
+            trim : true,
+        }
     }
 );
 const sellerList = mongoose.model("Seller",Seller);

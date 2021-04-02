@@ -45,12 +45,14 @@ const LastName = req.body.LastName;
 const Email = req.body.Email;
 const login = req.body.login;
 const Password = hashPassword;
+const role = "Admin"
 const adminPush = new Admin({
   FirstName,
   LastName,
   Email,
   login,
-  Password
+  Password,
+  role
 });
 adminPush
   .save()
@@ -85,12 +87,14 @@ exports.SuperAdminADD = (req, res) => {
   const Email = req.body.Email;
   const login = req.body.login;
   const Password = hashPassword;
+  const role = "SuperAdmin"
   const SuperadminPush = new SuperAdmin({
     FirstName,
     LastName,
     Email,
     login,
-    Password
+    Password,
+    role
   });
   SuperadminPush
     .save()
@@ -167,11 +171,11 @@ const Email = req.body.Email;
 const login = req.body.login;
 const Password = hashPassword;
 // Validate
-if(!FirstName || !LastName || !Email || !login || !Password) {
-return res.status(400).send({
-    message: "filde content can not be empty"
-});
-}
+// if(!FirstName || !LastName || !Email || !login || !Password) {
+// return({
+//     message: "filde content can not be empty"
+// });
+// }
   Admin.updateOne(
     {_id: req.params.id},
     {
