@@ -32,6 +32,11 @@ const Seller = new Schema(
             type : String,
             required : true,
             trim : true,
+        },
+        LimmitePro : {
+            type : String,
+            required : true,
+            trim : true,
         }
     }
 );

@@ -1,6 +1,23 @@
-
+import {useEffect, useState} from 'react';
+import { Link,useHistory  } from 'react-router-dom';
+import axios from 'axios';
+import "toastr/build/toastr.css";
+import toastr from 'toastr';
 function PacksSeller() {
+  
+	const history = useHistory();
+  // ---------------------Display the name of admin----------------------------
+  const name=localStorage.getItem('name');
 
+  const Proack = (id)=>{
+    // localStorage.setItem('idproduct',id);
+    // console.log(name);
+
+    history.push('/BuyPack');
+
+    
+    }
+    
 
 
     return(
@@ -128,7 +145,7 @@ function PacksSeller() {
               <li>Livraison Standard</li>
             </ul>
             <div className="mt-6 py-4">
-              <button className="bg-indigo-600 text-xl text-white py-2 px-6 rounded hover:bg-indigo-700 transition-colors duration-300">Get PACK</button>
+              <Link  onClick={Proack}><button className="bg-indigo-600 text-xl text-white py-2 px-6 rounded hover:bg-indigo-700 transition-colors duration-300">Get PACK</button></Link>
             </div>
           </div>
         </div>

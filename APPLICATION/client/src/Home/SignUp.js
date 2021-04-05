@@ -12,10 +12,7 @@ function SignUp() {
     const [login, setlogin] = useState();
     const [Password, setPassword] = useState();
   
-    // const FirstName = req.body.FirstName;
-    // const LastName = req.body.LastName;
-    // const Email = req.body.Email;
-    // const login = req.body.login;
+
 
 
     const handleSubmit = (e) => {
@@ -32,7 +29,7 @@ function SignUp() {
           
            console.log(res.data);
                  history.push('/Home/Login')
-                 toastr.info("Account Added!")
+                 toastr.info("Account Added Please check Your Email Account")
         }
       })
     }

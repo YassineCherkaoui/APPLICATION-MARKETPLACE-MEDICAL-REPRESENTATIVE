@@ -2,6 +2,7 @@ module.exports = function (app) {
     // --------------------Caling Controller File----------------- 
     var seller = require('../Controller/Seller');
 
+
     //------------------------Add Seller---------------------
     app.post('/seller/add', seller.SellerADD);
 
@@ -26,4 +27,9 @@ module.exports = function (app) {
     // ______________________get Product by id__________________
     app.get('/product/:id', seller.getProductById);
     
+        // ______________________get Product by idseller__________________
+    app.get('/product/seller/:idSeller', seller.getProductByname);
+
+    // ______________________get Seller by name __________________
+    app.get('/seller/name/:Username', seller.GetSellerbyName);
 }

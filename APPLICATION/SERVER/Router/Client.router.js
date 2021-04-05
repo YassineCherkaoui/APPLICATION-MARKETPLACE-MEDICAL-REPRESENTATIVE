@@ -1,5 +1,7 @@
 module.exports = function (app) {
 
+	const cors = require("cors")
+
     // --------------------Calling Controller File----------------- 
     var Client = require('../Controller/Client');
 
@@ -28,4 +30,24 @@ module.exports = function (app) {
     app.post('/Home/SignUp', Client.ClientAuth);
     //-------------------------login Client-----------------------------
     app.post('/Home/SignIn', Client.ClientLog);
+
+
+    app.put('/activateAccount/:token', Client.ClientActivated);
+
+
+        //-------------------------Get All Order-----------------------------
+   app.get('/order', Client.getOrder);
+
+    // ______________________get order by id__________________
+    app.get('/order/:id', Client.getOrdersById);
+
+   
+        //-------------------------Delete Product-----------------------------
+        app.delete('/order/delete/:id', Client.DeleteOrders);
+
+        //-------------------------Order Update-----------------------------
+        app.put('/order/update/:id', Client.UpdateOrders);
+    
+         // ______________________get Product by id__________________
+	app.post('/send_mail', cors(),Client.Email);
 }

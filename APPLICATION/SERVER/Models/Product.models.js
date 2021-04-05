@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const date = new Date().getTime();
+// const date = new Date().getTime();
 const Schema = mongoose.Schema;
 
 const Product = new Schema(

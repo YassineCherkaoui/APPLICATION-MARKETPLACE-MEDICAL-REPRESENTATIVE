@@ -148,6 +148,7 @@ exports.productAdd = (req,res) =>{
     idSeller: req.body.idSeller,
     currentDate: date,
     status : req.body.status,
+    LimmitePro : 10
                     });
 //Save
 product.save()
@@ -204,7 +205,8 @@ exports.UpdateProduct = (req, res) => {
       discription: req.body.discription,
       idSeller: req.body.idSeller,
       currentDate: date,
-      status : req.body.status
+      status : req.body.status,
+      LimmitePro : 10
     })
     .then(() => res.status(201).json("Product updated successfully"))
     .catch((err) => res.status(400).json("Error :" + err));
@@ -227,4 +229,35 @@ exports.getProductById = (req, res) => {
               error: err
           });
       });
+};
+
+
+  //______________________get Product By name_____________________ 
+  exports.getProductByname = (req, res) => {
+    Product.find({
+      idSeller: req.params.idSeller
+      })
+      .then(Product => {
+        res.send(Product);
+      }).catch(err => {
+        res.status(500).send({
+          message: err.message || "Some error occurred while retrieving question."
+        });
+      });
+  };
+
+
+  
+  //______________________get Seller by Name_____________________ 
+exports.GetSellerbyName = (req, res) => {
+  Seller.find({
+    Username: req.params.Username
+    })
+    .then(Seller => {
+      res.send(Seller);
+    }).catch(err => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving question."
+      });
+    });
 };

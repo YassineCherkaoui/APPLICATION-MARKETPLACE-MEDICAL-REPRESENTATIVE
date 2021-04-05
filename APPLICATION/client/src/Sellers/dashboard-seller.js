@@ -1,8 +1,22 @@
-
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useHistory } from "react-router-dom";
+import { Link  } from 'react-router-dom';
 function DashboardSeller() {
 
+  const history = useHistory();
+  
+  // ---------------------Display the lentgh of product----------------------------
+  const [product , setProduct] = useState(null);
+  axios.get(`http://localhost:8080/product`)
+  .then(function (response) {
+    setProduct(response.data.length)
+  }).catch(function (err) {
+    console.log(err);
+  });
 
-
+    // ---------------------Display the name of admin----------------------------
+    const name=localStorage.getItem('name');
 
     return(
      
@@ -17,7 +31,7 @@ function DashboardSeller() {
         <img className="h-16 w-16 rounded-full object-cover mt-4" src="./seller/sellericon.png" alt="Logo" />
         <span className="capitalize mt-2 mb-6 dark:text-gray-400 transition
           duration-500 ease-in-out text-center">
-          Seller <br></br> Basic<br></br>
+         {name} Seller <br></br> Basic<br></br>
         </span>
                   <a class="font-semibold text-gray-700 dark:text-gray-400
            mb-2 transition
@@ -142,7 +156,7 @@ function DashboardSeller() {
                                     </div>
     
                                     <div class="mx-5">
-                                        <h4 class="text-2xl font-semibold text-gray-700">89</h4>
+                                        <h4 class="text-2xl font-semibold text-gray-700">{product}</h4>
                                         <div class="text-gray-500">Product</div>
                                     </div>
                                 </div>
@@ -167,7 +181,24 @@ function DashboardSeller() {
                                 </div>
                             </div>
 
-                            
+                            <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-1/3 xl:mt-0">
+                                <div class="flex items-center px-5 py-6 shadow-sm rounded-md bg-white">
+                                    <div class="p-3 rounded-full bg-blue-600 bg-opacity-75">
+                                        <svg class="h-8 w-8 text-white" viewBox="0 0 28 28" fill="none">
+                                            <path d="M6.99998 11.2H21L22.4 23.8H5.59998L6.99998 11.2Z" fill="currentColor"
+                                                stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+                                            <path
+                                                d="M9.79999 8.4C9.79999 6.08041 11.6804 4.2 14 4.2C16.3196 4.2 18.2 6.08041 18.2 8.4V12.6C18.2 14.9197 16.3196 16.8 14 16.8C11.6804 16.8 9.79999 14.9197 9.79999 12.6V8.4Z"
+                                                stroke="currentColor" stroke-width="2"></path>
+                                        </svg>
+                                    </div>
+    
+                                    <div class="mx-5">
+                                        <h4 class="text-2xl font-semibold text-gray-700">15</h4>
+                                        <div class="text-gray-500">Product Limits</div>
+                                    </div>
+                                </div>
+                            </div>
     
                         </div>
                     </div>

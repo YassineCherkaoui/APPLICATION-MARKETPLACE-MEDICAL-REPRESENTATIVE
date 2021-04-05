@@ -2,14 +2,13 @@
 import {useEffect, useState} from 'react';
 import { Link,useHistory  } from 'react-router-dom';
 import axios from 'axios';
-import $ from 'jquery'; 
-import filetext from './text.txt';
+
 // import { Document,pdfjs,Page   } from 'react-pdf'
 // pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 function ListSeller() {
 
   const history = useHistory();
-  //----------- show gategory added in datatable------------
+//----------- show gategory added in datatable------------
   const [seller , setseller] = useState(null);
   useEffect(()=>{
   
@@ -22,12 +21,7 @@ function ListSeller() {
     
   },[])
 
-
-
-
-  
 // ---------------Delete admin-------------------
-
 const deleteSeller = (id)=>{
   var yesno = window.confirm("Are You Sure?");
   if (yesno) {   
@@ -35,39 +29,34 @@ axios.delete(`http://localhost:8080/seller/delete/${id}`)
 .then(function (response) {
   window.location.reload();
   console.log('item was deleted Succesfully ... ');
-  
-})
-}
-
+    })
+      }
 }
 
 const getIdSeller = (id)=>{
 localStorage.setItem('idseller',id);
 history.push('/editseller');
-
 }
-$(document).ready(function(){
-  $(".displaymsg").click(function(){
-    $(".modal-body").load(filetext);
-  });
+
+
+const logOut =()=>{
+  localStorage.removeItem('token')
+  history.push('/superAdmin');
+  }
+
+
+
+
+  const [adminlengh , setsellerlengh] = useState(null);
+
+  axios.get(`http://localhost:8080/seller`)
+  .then(function (response) {
+    setsellerlengh(response.data.length)
+  }).catch(function (err) {
+    console.log(err);
 });
 
-
-
-
-
-
-// const logOut =()=>{
-
-//   localStorage.removeItem('token')
-//   history.push('/superAdmin');
-//   }
-
-
-
-
-
-
+const name=localStorage.getItem('name');
 
 
 
@@ -84,8 +73,7 @@ $(document).ready(function(){
       <img className="h-16 w-16 rounded-full object-cover mt-4" src="./superadmin/loginsuperadmin.jpg" alt="Logo" />
       <span className="capitalize mt-2 mb-6 dark:text-gray-400 transition
 				duration-500 ease-in-out text-center">
-        Yassine SuperAdmin <br></br>
-        <span>id : 231231</span>
+        {name} SuperAdmin <br></br>
       </span>
     </div>
     <ul>
@@ -99,6 +87,24 @@ $(document).ready(function(){
           </span>
         </a>
       </li>
+
+
+      <li className="pl-8 py-2 font-semibold text-green-700 dark:text-gray-400
+				hover:bg-pink-200 dark-hover:bg-pink-500 mb-2 transition
+				duration-500 ease-in-out ml-4">
+        <a href="/addadmins" className="focus:text-pink-500 dark-focus:text-pink-400
+					focus:outline-none w-full transition duration-500 ease-in-out">
+          <span className="flex items-center">
+            <span className="ml-4 capitalize">ADD ADMINS</span>
+          </span>
+        </a>
+      </li>
+
+
+
+
+
+
       <li className="pl-8 py-2 font-semibold text-gray-700 dark:text-gray-400
 				hover:bg-pink-200 dark-hover:bg-pink-500 mb-2 transition
 				duration-500 ease-in-out">
@@ -111,8 +117,9 @@ $(document).ready(function(){
       </li>
       
     </ul>
+
     <div class="mt-auto flex items-center text-red-700 dark:text-red-400">
-			<a href="/Logout" class="flex items-center">
+			<Link  onClick={logOut}><a href="/Logout" class="flex items-center mt-8 ml-8">
 				<svg class="fill-current h-5 w-5" viewBox="0 0 24 24">
 					<path
 						d="M16 17v-3H9v-4h7V7l5 5-5 5M14 2a2 2 0 012
@@ -120,9 +127,10 @@ $(document).ready(function(){
 						0 012-2h9z"></path>
 				</svg>
 				<span class="ml-4 capitalize font-medium">log out</span>
-			</a>
+			</a></Link>
 
 		</div>
+
   </nav>
   <main className="flex-1 bg-gray-200 dark:bg-gray-900 overflow-y-auto transition
 		duration-500 ease-in-out">
@@ -131,7 +139,7 @@ $(document).ready(function(){
       <h2 className="text-4xl font-medium capitalize">Sellers</h2>
       <div className="mt-1 mb-4 flex items-center justify-between">
         <span className="text-sm">
-          <strong>100</strong>
+          <strong>{adminlengh}</strong>
         </span>
         <div className="flex items-center select-none">
           <span className="hover:text-pink-500 cursor-pointer mr-3">

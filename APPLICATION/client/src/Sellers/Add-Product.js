@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import React, { useState } from 'react';
 
-
+import {useEffect} from 'react';
 
   function AddSellerProduct() {
     const history=useHistory();
@@ -21,9 +21,11 @@ const [status, setstatus] = useState();
 
 
 const handleSubmit = (e) => {
+    // ---------------------Display the name of admin----------------------------
+    const name=localStorage.getItem('name');
 
   e.preventDefault();
-  const admindata = {productImg,Titel,category,tags,price,Qty,discription,idSeller,status};
+  const admindata = {productImg,Titel,category,tags,price,Qty,discription,idSeller:name,status};
   axios.post('http://localhost:8080/seller/prooduct/add',admindata)
   .then(res => {
   if(res.error){
@@ -34,6 +36,26 @@ const handleSubmit = (e) => {
   }
   })
   }
+
+
+//----------- show Categoried in datatable------------
+const [Category, setCategory] = useState();
+useEffect(()=>{
+   axios.get(`http://localhost:8080/category`)
+    .then(function (response) {
+      setCategory(response.data)
+      // setType(response.data)
+    }).catch(function (err) {
+      console.log(err);
+  });
+},[])
+
+
+
+
+
+
+
 
 		return (
 			
@@ -70,15 +92,17 @@ onChange={e => setproductImg(e.target.value)}
           <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">
             Category
           </label>
+            
+
 		  <select className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
 			  value={category}
 			  onChange={e => setcategory(e.target.value)}
       >
-		  <option>Categoy1</option>
-		<option>Categoy2</option>
-		<option>Categoy3</option>
-			<option>Categoy4</option>
+      { Category && Category.map(item =>(
+		  <option value={item._id}>{item.CategoryName}</option>
+      ))}
 		  </select>
+
         </div>
       </div>
       <div className="flex flex-wrap -mx-3 mb-6">
@@ -148,10 +172,10 @@ onChange={e => setproductImg(e.target.value)}
           </button>
         </div>
       </div>
-      <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="16" 
+      {/* <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="16" 
 			  value={idSeller}
 			  onChange={e => setidSeller(e.target.value)}
-          />
+          /> */}
     </form>
     <div className="w-full object-cover h-auto  lg:w-full md:h-screen bg-cover bg-center bg-fixed " style={{backgroundImage: 'url(./seller/addproductbg.jpg)'}} />
   </div>

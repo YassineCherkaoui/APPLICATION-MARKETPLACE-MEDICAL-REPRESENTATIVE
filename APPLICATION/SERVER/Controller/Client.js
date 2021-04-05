@@ -10,6 +10,12 @@ const Payment = require('../Models/Payment.models');
 const jwt = require('jsonwebtoken');
 //A library to help you hash passwords.
 const bcrypt = require('bcrypt');
+// _____________PACKAGES NODEMAILER___________
+const nodemailer = require("nodemailer");
+
+const jwt_decode = require('jwt-decode');
+
+const date = new Date();
 
 //______________________get all Product_____________________ 
 exports.ProductList = (req, res) => {
@@ -104,12 +110,18 @@ exports.getProductById = (req, res) => {
 
 exports.PaymentAdd = (req, res) => {
     const payment = new Payment({
+      fullname: req.body.fullname,
+      address: req.body.address,
+      phone: req.body.phone,
+      email: req.body.email,
         idProduct: req.body.idProduct,
         idSeller: req.body.idSeller,
         idUser : req.body.idUser,
         cardNumber : req.body.cardNumber,
         expareddate : req.body.expareddate,
         cvv : req.body.cvv,
+        status : 'Unconfirmed',
+        OrderDate : date
     });
     //Save
     payment.save()
@@ -119,7 +131,7 @@ exports.PaymentAdd = (req, res) => {
 
 
 //------------------------Client authentication---------------------
-  exports.ClientAuth = (req, res) => {
+  exports.ClientAuth = async (req, res) => {
     //10==saltRounds
     bcrypt.hash(req.body.Password, 10, function (err, hashPassword) {
         if (err) {
@@ -133,6 +145,7 @@ exports.PaymentAdd = (req, res) => {
         const login = req.body.login;
         const role = "Client";
         const status = "Unvalide";
+        const Verified = false;
         const Password = hashPassword;
         const ClientPush = new Client({
             FirstName,
@@ -141,7 +154,8 @@ exports.PaymentAdd = (req, res) => {
             login,
             role,
             status,
-            Password
+            Password,
+            Verified
         });
         ClientPush
         
@@ -149,7 +163,50 @@ exports.PaymentAdd = (req, res) => {
             .then(() => res.json("Client ADDED!!!!!"))
             .catch((err) => res.status(400).json("Error :" + err));
     });
+    
+    const token = jwt.sign({login: req.body.login, Email : req.body.Email}, 'tokenkey');
+
+    const transport = nodemailer.createTransport({
+      service: "gmail",
+          auth: {
+              user: 'cyassin95@gmail.com',//email
+              pass: 'Sanasaida123'//password
+          }
+      })
+    
+      await transport.sendMail({
+          from: 'flasn@gmail.Com',
+          to: 'cyassin95@gmail.com',
+          subject: "Email verification",
+          html: `
+          <h2>Please click on below link to activate your account</h2>
+          <p>http://localhost:3000/validateAccount/${token}</p>
+      `
+      })
+    // ----------------------send email validation -------------------------------
+    
 }
+
+//------------------------Client authentication---------------------
+exports.ClientActivated =  async(req, res) => {
+  const token = req.params.token;
+
+  jwt.verify(token, 'tokenkey');
+
+  let decoded = await jwt_decode(token);
+  let Email = decoded.Email;
+
+   await Client.findOneAndUpdate({ Email: Email },{Verified : true});
+
+   res.json({
+           message : "ok"
+   });
+}
+
+
+
+
+
 
 
 //-------------------------login Client-----------------------------
@@ -171,6 +228,12 @@ exports.ClientLog = (req, res) => {
               })
             }
             if (result) {
+
+              if(Client.Verified == false){
+                res.json({
+                  Verified: 'InActive'
+                  })
+            }else{
               let token = jwt.sign({
                 login: login
               }, 'tokenkey', (err, token) => {
@@ -179,6 +242,10 @@ exports.ClientLog = (req, res) => {
                   token: token
                 })
               })
+            }
+
+
+
             } 
             
           })
@@ -190,3 +257,96 @@ exports.ClientLog = (req, res) => {
       }).catch((err) => res.status(400).json("Error :" + err));
   }
   
+  //______________________get all Orders_____________________ 
+exports.getOrder = (req, res) => {
+  Payment.find()
+    .then(PaymentInfos => {
+      res.status(200).json(PaymentInfos);
+    }).catch(error => {
+      console.log(error);
+      res.status(500).json({
+        message: "Error!",
+        error: error
+      });
+    });
+};
+
+// ______________________get Order by id__________________
+exports.getOrdersById = (req, res) => {
+  Payment.findById(req.params.id)
+      .then(Payment => {
+        res.status(200).json(Payment);
+      }).catch(err => {
+          if(err.kind === 'ObjectId') {
+              return res.status(404).send({
+                  message: "Payment not found with id " + req.params.id,
+                  error: err
+              });                
+          }
+          return res.status(500).send({
+              message: "Error retrieving Payment with id " + req.params.id,
+              error: err
+          });
+      });
+};
+
+//______________________Delete Order_____________________ 
+exports.DeleteOrders = (req, res) => {
+  const {id} = req.params;
+  Payment.findOneAndDelete({_id: id})
+      .then(Payment => {
+          if(!Payment) {
+            res.status(404).json({
+              message: "Does Not exist a Payment with id = ",
+              error: "404",
+            });
+          }
+          res.status(200).json({});
+      }).catch(err => {
+          return res.status(500).send({
+            message: "Error -> Can NOT delete a Payment with id = ",
+            error: err.message
+          });
+      });
+};
+
+//________________________updating Order____________________
+exports.UpdateOrders = (req, res) => {
+  // Find Product By ID and update it
+  Payment.updateOne({
+      _id: req.params.id
+    }, {
+      status: req.body.status
+    })
+    .then(() => res.status(201).json("Order Confirmed successfully"))
+    .catch((err) => res.status(400).json("Error :" + err));
+};
+
+// _____________SEND MAIL___________
+exports.Email = async (req, res) => {
+  const transport = nodemailer.createTransport({
+  service: "gmail",
+      auth: {
+          user: 'cyassin95@gmail.com',//email
+          pass: 'Sanasaida123'//password
+      }
+  })
+
+  await transport.sendMail({
+      from: 'flasn@gmail.Com',
+      to: req.body.email,
+      subject: "Bought Product",
+      html: `<div className="email" style="
+      border: 1px solid black;
+      padding: 20px;
+      font-family: sans-serif;
+      line-height: 2;
+      font-size: 20px; 
+      ">
+      <h2>Your Product Bought</h2>
+      <p>Thanks for buying our Product<p>
+  
+       </div>
+  `
+  })
+}

@@ -18,7 +18,7 @@ useEffect(()=>{
       console.log(err);
   });
   
-})
+},[idProducttobuy])
 
 
 

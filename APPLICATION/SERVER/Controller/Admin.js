@@ -7,6 +7,8 @@ const jwt = require('jsonwebtoken');
 //A library to help you hash passwords.
 const bcrypt = require('bcrypt');
 
+const date = new Date();
+
 //______________________get all Admin_____________________ 
 exports.AdminList = (req, res) => {
   Admin.find()
@@ -114,6 +116,7 @@ exports.DeliveryAdd = (req, res) => {
   const delivery = new Delivery({
     Delivry_Name: req.body.Delivry_Name,
     Type: req.body.Type,
+    DateAdded: date,
     role : "Delivry"
   });
   //Save

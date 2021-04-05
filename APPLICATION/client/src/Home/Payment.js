@@ -23,7 +23,7 @@ function Payment(){
           console.log(err);
       });
       
-    })
+    },[idProducttobuy])
 
 
 
@@ -35,7 +35,14 @@ const [cardNumber, setcardNumber] = useState();
 const [expareddate, setexpareddate] = useState();
 const [cvv, setcvv] = useState();
 
+const [fullname, setfullname] = useState();
+const [address, setaddress] = useState();
+const [phone, setphone] = useState();
+const [email, setemail] = useState();
 
+// fullname: req.body.fullname,
+// address: req.body.address,
+// phone: req.body.phone,
 
 
 // idProduct: req.body.idProduct,
@@ -49,7 +56,7 @@ const [cvv, setcvv] = useState();
 const handleSubmit = (e) => {
 
     e.preventDefault();
-    const Payment = {idProduct,idSeller,idUser,cardNumber,expareddate,cvv};
+    const Payment = {idProduct,idSeller,idUser,cardNumber,expareddate,cvv,fullname,address,phone,email};
     axios.post('http://localhost:8080/Home/Checkout/Payment',Payment)
     .then(res => {
     if(res.error){
@@ -64,25 +71,25 @@ const handleSubmit = (e) => {
 
 
 
-    const [ setSent ] = useState(false)
+    // const [ setSent ] = useState(false)
 	// const [  text, setText ] = useState("")
     // const [  Score ] = useState(0)
     // let text = Score;
-	const handleSend = async (e) => {
-		setSent(true)
-        const data = "win";
-        axios.post(`http://localhost:8080/send_mail`,data)
+	// const handleSend = async (e) => {
+	// 	setSent(true)
+  //       const data = "win";
+  //       axios.post(`http://localhost:8080/send_mail`,data)
           
-		.then(res => {
-		    if(res.error){
-				return false
-			}else{
+	// 	.then(res => {
+	// 	    if(res.error){
+	// 			return false
+	// 		}else{
 				
-				 console.log(res.data);
-			}
+	// 			 console.log(res.data);
+	// 		}
 		 
-		})
-	}
+	// 	})
+	// }
 
 
 
@@ -99,6 +106,7 @@ const handleSubmit = (e) => {
 </a>
         {/* <label className="text-sm font-medium ml-4">PayPal</label> */}
       </div>
+      
       <div className="border-t">
         <div className="flex items-center px-8 py-5">
           <input className="appearance-none w-4 h-4 rounded-full border-2 border-white ring-2 ring-blue-600 ring-opacity-100 bg-blue-600" type="radio" />
@@ -114,6 +122,40 @@ const handleSubmit = (e) => {
           </div>
 
           <div className>
+            <label className="text-xs font-semibold" htmlFor="expareddate">Full Name</label>
+            <input className="flex items-center h-10 border mt-1 rounded px-4 w-full text-sm" type="text" placeholder="Yassine Cherkaoui" 
+            value={fullname}
+            onChange={e => setfullname(e.target.value)}
+            />  
+          </div>
+          <div className>
+            <label className="text-xs font-semibold" htmlFor="cvv">Address</label>
+            <input className="flex items-center h-10 border mt-1 rounded px-4 w-full text-sm" type="text" placeholder="Morocco" 
+            value={address}
+            onChange={e => setaddress(e.target.value)}
+            />  
+          </div>
+          <div className>
+            <label className="text-xs font-semibold" htmlFor="cvv">Email</label>
+            <input className="flex items-center h-10 border mt-1 rounded px-4 w-full text-sm" type="text" placeholder="yassin@gmail.com" 
+            value={email}
+            onChange={e => setemail(e.target.value)}
+            />  
+          </div>
+          <div className>
+            <label className="text-xs font-semibold" htmlFor="cvv">Phone</label>
+            <input className="flex items-center h-10 border mt-1 rounded px-4 w-full text-sm" type="number" placeholder="+212600000000" 
+            value={phone}
+            onChange={e => setphone(e.target.value)}
+            />  
+          </div>
+
+
+
+
+
+
+          <div className>
             <label className="text-xs font-semibold" htmlFor="expareddate">Expiry Date</label>
             <input className="flex items-center h-10 border mt-1 rounded px-4 w-full text-sm" type="text" placeholder="MM/YY" 
             value={expareddate}
@@ -126,6 +168,7 @@ const handleSubmit = (e) => {
             value={cvv}
             onChange={e => setcvv(e.target.value)}
             />  
+
 {/* è_________________test */}
 <input className="flex items-center h-10 border mt-1 rounded px-4 w-full text-sm" type="password" placeholder="..." 
             value={idProduct}
@@ -173,7 +216,7 @@ const handleSubmit = (e) => {
         <label className="text-xs text-gray-500 ml-2" htmlFor="termsConditions">I agree to the terms and conditions.</label>
       </div>
       <div className="flex flex-col px-8 pt-4">
-        <button className="flex items-center justify-center bg-blue-600 text-sm font-medium w-full h-10 rounded text-blue-50 hover:bg-blue-700" onClick={handleSend}>Make Payment</button>
+        <button className="flex items-center justify-center bg-blue-600 text-sm font-medium w-full h-10 rounded text-blue-50 hover:bg-blue-700">Make Payment</button>
       </div>
     </div>
   </div>

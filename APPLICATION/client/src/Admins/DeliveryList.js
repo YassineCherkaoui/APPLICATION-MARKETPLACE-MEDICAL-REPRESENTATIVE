@@ -8,47 +8,56 @@ import { Link  } from 'react-router-dom';
 function AdminDash() {
 
   const history = useHistory();
-//----------- show gategory added in datatable------------
+//----------- show added in datatable------------
 const [Delivry_Name, setDelivry_Name] = useState();
-
 useEffect(()=>{
-  axios.get(`http://localhost:8080/Delivry`)
+   axios.get(`http://localhost:8080/Delivry`)
     .then(function (response) {
       setDelivry_Name(response.data)
       // setType(response.data)
     }).catch(function (err) {
       console.log(err);
   });
-    
 },[])
 
-
-
-
-
-
-
-
 // ---------------Delete Delivry-------------------
-
 const deleteDelivry = (id)=>{
   var yesno = window.confirm("Are You Sure?");
   if (yesno) {   
-axios.delete(`http://localhost:8080/Delivry/delete/${id}`)
-.then(function (response) {
-  window.location.reload();
-  console.log('Delivry was deleted Succesfully ... ');
-  
-})
-}
+  axios.delete(`http://localhost:8080/Delivry/delete/${id}`)
+    .then(function (response) {
+    window.location.reload();
+      console.log('Delivry was deleted Succesfully ... ');
+    })
+  }
 
 }
 
+// ---------------GET ID TO UPDATE-------------------
 const getIdDelivry = (id)=>{
   localStorage.setItem('idDelivry',id);
   history.push('/EditDelivry');
-  
+}
+
+const [Delivry , setDelivry] = useState(null);
+
+axios.get(`http://localhost:8080/Delivry`)
+.then(function (response) {
+  setDelivry(response.data.length)
+}).catch(function (err) {
+  console.log(err);
+});
+
+
+  // ---------------------Display the name of admin----------------------------
+  const name=localStorage.getItem('name');
+// ---------------Logout admin-------------------
+const logOut =()=>{
+
+  localStorage.removeItem('token')
+  history.push('/admin');
   }
+
   return(
       
     <div className="h-screen flex">
@@ -62,7 +71,7 @@ const getIdDelivry = (id)=>{
         <img className="h-16 w-16 rounded-full object-cover mt-4" src="./admins/iconadmin.png" alt="Logo" />
         <span className="capitalize mt-2 mb-6 dark:text-gray-400 transition
           duration-500 ease-in-out text-center">
-          Admin
+          {name} {' '} Admin
         </span>
       </div>
       <ul>
@@ -96,27 +105,37 @@ const getIdDelivry = (id)=>{
             </span>
           </a>
         </li>
-                <li className="pl-8 py-2 font-semibold text-gray-700 dark:text-gray-400
+        <li className="pl-8 py-2 font-semibold text-gray-700 dark:text-gray-400
           hover:bg-pink-200 dark-hover:bg-pink-500 mb-2 transition
           duration-500 ease-in-out">
           <a href="/Delivery" className="focus:text-pink-500 dark-focus:text-pink-400
             focus:outline-none w-full transition duration-500 ease-in-out">
             <span className="flex items-center">
-              <span className="ml-4 capitalize">Add delivery people</span>
+              <span className="ml-4 capitalize">Delivery people</span>
+            </span>
+          </a>
+        </li>
+        <li className="pl-8 py-2 font-semibold text-green-700 dark:text-gray-400
+          hover:bg-pink-200 dark-hover:bg-pink-500 mb-2 transition
+          duration-500 ease-in-out ml-8">
+          <a href="/AddDelivery" className="focus:text-pink-500 dark-focus:text-pink-400
+            focus:outline-none w-full transition duration-500 ease-in-out">
+            <span className="flex items-center">
+              <span className="ml-4 capitalize">Add delivery</span>
             </span>
           </a>
         </li>
       </ul>
       <div class="mt-auto flex items-center text-red-700 dark:text-red-400">
-        <a href="/Logout" class="flex items-center">
-          <svg class="fill-current h-5 w-5" viewBox="0 0 24 24">
-            <path
-              d="M16 17v-3H9v-4h7V7l5 5-5 5M14 2a2 2 0 012
-              2v2h-2V4H5v16h9v-2h2v2a2 2 0 01-2 2H5a2 2 0 01-2-2V4a2 2
-              0 012-2h9z"></path>
-          </svg>
-          <span class="ml-4 capitalize font-medium">log out</span>
-        </a>
+			<Link  onClick={logOut}><a href="/Logout" class="flex items-center mt-8 ml-8">
+				<svg class="fill-current h-5 w-5" viewBox="0 0 24 24">
+					<path
+						d="M16 17v-3H9v-4h7V7l5 5-5 5M14 2a2 2 0 012
+						2v2h-2V4H5v16h9v-2h2v2a2 2 0 01-2 2H5a2 2 0 01-2-2V4a2 2
+						0 012-2h9z"></path>
+				</svg>
+				<span class="ml-4 capitalize font-medium">log out</span>
+			</a></Link>
   
       </div>
     </nav>
@@ -125,11 +144,11 @@ const getIdDelivry = (id)=>{
       duration-500 ease-in-out">
       <div className="px-24 py-12 text-gray-700 dark:text-gray-500 transition
         duration-500 ease-in-out">
-        <h2 className="text-4xl font-medium capitalize">Admins</h2>
+        <h2 className="text-4xl font-medium capitalize">Delivry</h2>
         <div className="mt-1 mb-4 flex items-center justify-between">
           <span className="text-sm">
   
-            <strong>199</strong>
+            <strong>{Delivry}</strong>
   
           </span>
           <div className="flex items-center select-none">
@@ -194,7 +213,7 @@ const getIdDelivry = (id)=>{
                       </svg>
                       <span className="ml-2 text-sm text-gray-600
                         dark:text-gray-300 capitalize">
-                        15 aug 2019
+                        {item.DateAdded}
                       </span>
                     </div>
                   </div>
@@ -268,5 +287,6 @@ const getIdDelivry = (id)=>{
     
   </div>
   )
+  
 }
 export default AdminDash;

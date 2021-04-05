@@ -30,6 +30,36 @@ const Payment = new Schema({
             type: String,
             required: true,
             trim: true,
+        },
+        status: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        OrderDate : {
+            type : String,
+            required : true,
+            trim : true,
+        },
+        fullname : {
+            type : String,
+            required : true,
+            trim : true,
+        },
+        address : {
+            type : String,
+            required : true,
+            trim : true,
+        },
+        phone : {
+            type : String,
+            required : true,
+            trim : true,
+        },
+        email : {
+            type : String,
+            required : true,
+            trim : true,
         }
     }
 

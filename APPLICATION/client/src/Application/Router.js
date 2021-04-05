@@ -13,6 +13,10 @@ import Login from '../Home/login';
 import SignUp from '../Home/SignUp';
 import sousProduct from '../Home/SousCaty';
 import Payment from '../Home/Payment';
+import ValidateAccount from '../Home/RalidateAccount';
+
+
+
 import test from '../text';
 // ______________SUPERADMIN__________________
 //Admins
@@ -31,6 +35,7 @@ import addDelivry from '../Admins/addDelivry';
 import EditDelivry from '../Admins/editDelivery';
 import Order from '../Admins/Order';
 import DelivtyProblem from '../Admins/DelivryProblem';
+import ConfirmOrder from '../Admins/confirmOrders';
 // ______________SELLERS__________________
 import Loginseller from '../Sellers/loginseller';
 import BecomeSeller from '../Sellers/becomeseller';
@@ -40,7 +45,7 @@ import SellerProduct from '../Sellers/seller-product';
 import EditeProduct from '../Sellers/EditeProduct';
 import AddSellerProduct from '../Sellers/Add-Product';
 import Packs from '../Sellers/Packs';
-
+import buypack from '../Sellers/BuyPack';
 
 
 function Routes() {
@@ -57,7 +62,7 @@ function Routes() {
            <PrivateRouteClient  path="/sousProduct" exact component={sousProduct}/> 
            <PrivateRouteClient  path="/Home/Payment" exact component={Payment}/> 
            <Route  path="/test" exact component={test}/> 
-
+           <Route exact path="/validateAccount/:token" component={ValidateAccount} />
 
       {/* // ______________Client Route__________________ */}
         {/*Syper Admin Admins */}
@@ -76,6 +81,7 @@ function Routes() {
         <PrivateRouteAdmin  path="/EditDelivry" exact component={EditDelivry}/> 
         <PrivateRouteAdmin  path="/ClientOrder" exact component={Order}/> 
          <PrivateRouteAdmin  path="/ProblemOrder" exact component={DelivtyProblem}/> 
+         <PrivateRouteAdmin  path="/Admins/order/Confirm" exact component={ConfirmOrder}/> 
  {/* Sellers */}
         <Route  path="/seller" exact component={Loginseller}/> 
         <PrivateRouteSeller  path="/becomeseller" exact component={BecomeSeller}/>  
@@ -85,6 +91,7 @@ function Routes() {
         <PrivateRouteSeller  path="/AddSellerProduct" exact component={AddSellerProduct}/> 
         <PrivateRouteSeller  path="/Packs" exact component={Packs}/> 
         <PrivateRouteSeller  path="/editProduct" exact component={EditeProduct}/> 
+        <PrivateRouteSeller  path="/BuyPack" exact component={buypack}/> 
       </Switch>
 </BrowserRouter>
   );

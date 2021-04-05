@@ -29,13 +29,18 @@ const Client = new Schema(
             required : true,
             trim : true,
         },
-        Statu : {
+        status : {
             type : String,
             required : true,
             trim : true,
         },
         role : {
             type : String,
+            required : true,
+            trim : true,
+        },
+        Verified : {
+            type : Boolean,
             required : true,
             trim : true,
         }

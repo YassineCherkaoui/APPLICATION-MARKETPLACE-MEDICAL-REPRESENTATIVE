@@ -21,10 +21,22 @@ function Login() {
 		.then(res => {
 			console.log(res)
 			if(!res.data.message){ 
+        let Verified= res.data.Verified;
+
+        localStorage.setItem("Verified", Verified);
+        if(Verified === "InActive"){
+          toastr.error('Please Verifier You Accout First by Click on URL In Your Emil Box')
+        }else{
 			 let token= res.data.token;
 			 localStorage.setItem("token", token);
 			 history.push('/');
 			 toastr.info(' authenticated SuccessFully')
+      }
+
+
+
+
+
 
 			}else{
   

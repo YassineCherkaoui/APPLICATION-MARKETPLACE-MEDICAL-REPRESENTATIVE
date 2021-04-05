@@ -23,26 +23,15 @@ function LoginSeller() {
 
        localStorage.setItem("status", status);
         if(status === "InActive"){
-          var yesno = window.confirm(
-          "This Account is not activated! Yet please contact us if you have any problem" +
-          " Email : supportSeller@marequetplce.com"
-          );
-          if (yesno) {   
-            window.location.reload();
-          }
+          toastr.error('This Account is not activated! Yet please contact us if you have any problem')
         }else if (status === "Block"){
-         yesno = window.confirm(
-          "This Account is Blocked! please contact us if you have any problem" +
-          " Email : supportSeller@marequetplce.com"
-          );
-          if (yesno) {   
-            window.location.reload();
-          }
+        toastr.error('This Account is Blocked! please contact us if you have any problem')
       }else{
         let token= res.data.token;
         localStorage.setItem("token", token);
+        localStorage.setItem('name',Username);
         history.push('/DashboardSeller');
-        toastr.info('User is authenticated SuccessFully')
+        toastr.info('Welcome Back Seller')
       }
     
     
@@ -55,6 +44,18 @@ function LoginSeller() {
 		 
 		})
 	}
+
+
+
+
+
+
+
+
+
+
+
+
 
     return(
        <div className="lg:flex">

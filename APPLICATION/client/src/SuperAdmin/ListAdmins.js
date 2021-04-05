@@ -5,8 +5,14 @@ import axios from 'axios';
 function ListAdmins() {
 
   const history = useHistory();
+
+
 //----------- show gategory added in datatable------------
 const [admin , setAdmin] = useState(null);
+
+
+const [adminlengh , setAminlengh] = useState(null);
+
 useEffect(()=>{
 
   axios.get(`http://localhost:8080/admin`)
@@ -19,6 +25,24 @@ useEffect(()=>{
 },[])
 
 const name=localStorage.getItem('name');
+
+
+
+
+
+
+axios.get(`http://localhost:8080/admin`)
+    .then(function (response) {
+      setAminlengh(response.data.length)
+    }).catch(function (err) {
+      console.log(err);
+  });
+
+
+
+
+
+
 
 
 
@@ -43,26 +67,7 @@ history.push('/EditeAdmin');
 }
 
 
-
-axios.get(`http://localhost:8080/admin`)
-.then(function (response) {
-  numAdmin = response.data.length
-  console.log(numAdmin);
-}).catch(function (err) {
-  console.log(err);
-});
-let numAdmin =5;
-//   axios.get(`hhttp://localhost:8080/admin`)
-// .then(res => {
-
-//   useState=
-//           numAdmin = res.data.length
-
-     
-      
-// })
-
-
+// ---------------Logout admin-------------------
 const logOut =()=>{
 
   localStorage.removeItem('token')
@@ -95,6 +100,21 @@ const logOut =()=>{
           </span>
         </a>
       </li>
+
+      <li className="pl-8 py-2 font-semibold text-green-700 dark:text-gray-400
+				hover:bg-pink-200 dark-hover:bg-pink-500 mb-2 transition
+				duration-500 ease-in-out ml-4">
+        <a href="/addadmins" className="focus:text-pink-500 dark-focus:text-pink-400
+					focus:outline-none w-full transition duration-500 ease-in-out">
+          <span className="flex items-center">
+            <span className="ml-4 capitalize">ADD ADMINS</span>
+          </span>
+        </a>
+      </li>
+
+
+
+
       <li className="pl-8 py-2 font-semibold text-gray-700 dark:text-gray-400
 				hover:bg-pink-200 dark-hover:bg-pink-500 mb-2 transition
 				duration-500 ease-in-out">
@@ -105,9 +125,10 @@ const logOut =()=>{
           </span>
         </a>
       </li>
+
     </ul>
     <div class="mt-auto flex items-center text-red-700 dark:text-red-400">
-			<Link  onClick={logOut}><a href="/Logout" class="flex items-center">
+			<Link  onClick={logOut}><a href="/Logout" class="flex items-center mt-8 ml-8">
 				<svg class="fill-current h-5 w-5" viewBox="0 0 24 24">
 					<path
 						d="M16 17v-3H9v-4h7V7l5 5-5 5M14 2a2 2 0 012
@@ -128,7 +149,7 @@ const logOut =()=>{
       <div className="mt-1 mb-4 flex items-center justify-between">
         <span className="text-sm">
 
-          <strong>{numAdmin}</strong>
+          <strong>{adminlengh}</strong>
 
         </span>
         <div className="flex items-center select-none">

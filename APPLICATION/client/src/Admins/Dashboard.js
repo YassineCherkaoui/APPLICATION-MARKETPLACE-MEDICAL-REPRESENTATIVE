@@ -1,15 +1,49 @@
-// import { useHistory } from "react-router-dom";
-// import toastr from 'toastr';
-// import React, { useState,useEffect } from 'react';
-// import axios from 'axios';
-
-
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useHistory } from "react-router-dom";
+import { Link  } from 'react-router-dom';
 
 function Dashboard() {
 
+  const history = useHistory();
+  // ---------------------Display the lentgh of delivry----------------------------
+  const [Delivry , setDelivry] = useState(null);
+  axios.get(`http://localhost:8080/Delivry`)
+  .then(function (response) {
+    setDelivry(response.data.length)
+  }).catch(function (err) {
+    console.log(err);
+});
+
+  // ---------------------Display the lentgh of product----------------------------
+const [product , setProduct] = useState(null);
+axios.get(`http://localhost:8080/product`)
+.then(function (response) {
+  setProduct(response.data.length)
+}).catch(function (err) {
+  console.log(err);
+});
+
+  // ---------------------Display the lentgh of Orders----------------------------
+const [Order , setOrder] = useState(null);
+axios.get(`http://localhost:8080/order`)
+.then(function (response) {
+  setOrder(response.data.length)
+}).catch(function (err) {
+  console.log(err);
+});
+
+  // ---------------------Display the name of admin----------------------------
+const name=localStorage.getItem('name');
+
+// ---------------Logout admin-------------------
+const logOut =()=>{
+
+  localStorage.removeItem('token')
+  history.push('/admin');
+  }
 
       return(
-
     <div className="h-screen flex">
     <nav className="w-56 bg-white dark:bg-gray-800 select-none overflow-y-auto
       transition duration-500 ease-in-out">
@@ -21,7 +55,7 @@ function Dashboard() {
         <img className="h-16 w-16 rounded-full object-cover mt-4" src="./admins/iconadmin.png" alt="Logo" />
         <span className="capitalize mt-2 mb-6 dark:text-gray-400 transition
           duration-500 ease-in-out text-center">
-          Admin
+          {name} {' '} Admin
         </span>
       </div>
       <ul>
@@ -61,21 +95,31 @@ function Dashboard() {
           <a href="/Delivery" className="focus:text-pink-500 dark-focus:text-pink-400
             focus:outline-none w-full transition duration-500 ease-in-out">
             <span className="flex items-center">
-              <span className="ml-4 capitalize">Add delivery people</span>
+              <span className="ml-4 capitalize">Delivery people</span>
+            </span>
+          </a>
+        </li>
+        <li className="pl-8 py-2 font-semibold text-green-700 dark:text-gray-400
+          hover:bg-pink-200 dark-hover:bg-pink-500 mb-2 transition
+          duration-500 ease-in-out ml-8">
+          <a href="/AddDelivery" className="focus:text-pink-500 dark-focus:text-pink-400
+            focus:outline-none w-full transition duration-500 ease-in-out">
+            <span className="flex items-center">
+              <span className="ml-4 capitalize">Add delivery</span>
             </span>
           </a>
         </li>
       </ul>
       <div class="mt-auto flex items-center text-red-700 dark:text-red-400">
-        <a href="/Logout" class="flex items-center">
-          <svg class="fill-current h-5 w-5" viewBox="0 0 24 24">
-            <path
-              d="M16 17v-3H9v-4h7V7l5 5-5 5M14 2a2 2 0 012
-              2v2h-2V4H5v16h9v-2h2v2a2 2 0 01-2 2H5a2 2 0 01-2-2V4a2 2
-              0 012-2h9z"></path>
-          </svg>
-          <span class="ml-4 capitalize font-medium">log out</span>
-        </a>
+			<Link  onClick={logOut}><a href="/Logout" class="flex items-center mt-8 ml-8">
+				<svg class="fill-current h-5 w-5" viewBox="0 0 24 24">
+					<path
+						d="M16 17v-3H9v-4h7V7l5 5-5 5M14 2a2 2 0 012
+						2v2h-2V4H5v16h9v-2h2v2a2 2 0 01-2 2H5a2 2 0 01-2-2V4a2 2
+						0 012-2h9z"></path>
+				</svg>
+				<span class="ml-4 capitalize font-medium">log out</span>
+			</a></Link>
   
       </div>
     </nav>
@@ -84,13 +128,7 @@ function Dashboard() {
       duration-500 ease-in-out">
       <div className="px-24 py-12 text-gray-700 dark:text-gray-500 transition
         duration-500 ease-in-out">
-        <h2 className="text-4xl font-medium capitalize">Admins</h2>
         <div className="mt-1 mb-4 flex items-center justify-between">
-          <span className="text-sm">
-  
-            <strong>199</strong>
-  
-          </span>
           <div className="flex items-center select-none">
             <span className="hover:text-pink-500 cursor-pointer mr-3">
               <svg viewBox="0 0 512 512" className="h-5 w-5 fill-current">
@@ -150,8 +188,8 @@ function Dashboard() {
                                     </div>
     
                                     <div class="mx-5">
-                                        <h4 class="text-2xl font-semibold text-gray-700">89</h4>
-                                        <div class="text-gray-500">New Seller</div>
+                                        <h4 class="text-2xl font-semibold text-gray-700">{product}</h4>
+                                        <div class="text-gray-500">Products</div>
                                     </div>
                                 </div>
                             </div>
@@ -169,7 +207,7 @@ function Dashboard() {
                                     </div>
     
                                     <div class="mx-5">
-                                        <h4 class="text-2xl font-semibold text-gray-700">15</h4>
+                                        <h4 class="text-2xl font-semibold text-gray-700">{Order}</h4>
                                         <div class="text-gray-500">Orders</div>
                                     </div>
                                 </div>
@@ -189,7 +227,7 @@ function Dashboard() {
                                     </div>
     
                                     <div class="mx-5">
-                                        <h4 class="text-2xl font-semibold text-gray-700">20</h4>
+                                        <h4 class="text-2xl font-semibold text-gray-700">{Delivry}</h4>
                                         <div class="text-gray-500">Delivry Man</div>
                                     </div>
                                 </div>

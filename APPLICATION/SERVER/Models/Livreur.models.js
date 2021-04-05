@@ -10,6 +10,11 @@ const Delivery = new Schema({
             type: String,
             required: true,
             trim: true,
+        },
+        DateAdded: {
+            type: String,
+            required: true,
+            trim: true,
         }
     }
 

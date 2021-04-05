@@ -21,6 +21,7 @@ function LoginSuperAdmin() {
 			if(!res.data.message){ 
 			 let token= res.data.token;
 			 localStorage.setItem("token", token);
+       localStorage.setItem('name',login);
 			 history.push('/AdminDashboard');
 			 toastr.info('User is authenticated SuccessFully', `Welcome ${user.login}`)
 
