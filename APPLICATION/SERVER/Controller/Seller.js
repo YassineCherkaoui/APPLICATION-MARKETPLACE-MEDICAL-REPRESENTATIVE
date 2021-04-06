@@ -261,3 +261,24 @@ exports.GetSellerbyName = (req, res) => {
       });
     });
 };
+
+
+//________________________updating Seller bying pack____________________
+exports.buyPack = (req, res) => {
+  // Find Product By ID and update it
+  Seller.updateOne({
+    Username: req.params.Username
+    }, {
+      type : req.body.type
+    })
+    .then(() => res.status(201).json("Pack bought successfully"))
+    .catch((err) => res.status(400).json("Error :" + err));
+};
+
+exports.sellerLogout = (req, res) => {
+  const deconnect = res.clearCookie("token")
+
+  res.json({
+      message: 'SuperAdmin is Signout !!'
+  })
+}

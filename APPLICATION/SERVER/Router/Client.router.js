@@ -9,6 +9,13 @@ module.exports = function (app) {
     //------------------------get all Product---------------------
     app.get('/products', Client.ProductList);
 
+
+    //------------------------get all Product---------------------
+    app.get('/prdct', Client.ProductList);
+    
+
+
+    
     //------------------------get all Catigories---------------------
     app.get('/category', Client.GETCATEGORIES);
 
@@ -50,4 +57,8 @@ module.exports = function (app) {
     
          // ______________________get Product by id__________________
 	app.post('/send_mail', cors(),Client.Email);
+
+        //-------------------------Logout superAdmin-----------------------------
+        app.get('/log/Logout', Client.clientLogout);
+
 }

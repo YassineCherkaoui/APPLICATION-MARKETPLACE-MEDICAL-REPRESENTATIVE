@@ -32,4 +32,12 @@ module.exports = function (app) {
 
     // ______________________get Seller by name __________________
     app.get('/seller/name/:Username', seller.GetSellerbyName);
+
+
+
+        //-------------------------Product Update-----------------------------
+        app.put('/product/update/name/:Username', seller.buyPack);
+
+                //-------------------------Logout superAdmin-----------------------------
+                app.get('/seller/logout', seller.sellerLogout);
 }

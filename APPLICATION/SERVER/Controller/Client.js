@@ -131,7 +131,7 @@ exports.PaymentAdd = (req, res) => {
 
 
 //------------------------Client authentication---------------------
-  exports.ClientAuth = async (req, res) => {
+exports.ClientAuth = async (req, res) => {
     //10==saltRounds
     bcrypt.hash(req.body.Password, 10, function (err, hashPassword) {
         if (err) {
@@ -175,8 +175,8 @@ exports.PaymentAdd = (req, res) => {
       })
     
       await transport.sendMail({
-          from: 'flasn@gmail.Com',
-          to: 'cyassin95@gmail.com',
+          from: 'Cyassin95@gmail.com',
+          to: req.body.Email,
           subject: "Email verification",
           html: `
           <h2>Please click on below link to activate your account</h2>
@@ -194,9 +194,9 @@ exports.ClientActivated =  async(req, res) => {
   jwt.verify(token, 'tokenkey');
 
   let decoded = await jwt_decode(token);
-  let Email = decoded.Email;
+  let login = decoded.login;
 
-   await Client.findOneAndUpdate({ Email: Email },{Verified : true});
+   await Client.findOneAndUpdate({ login: login },{Verified : true});
 
    res.json({
            message : "ok"
@@ -233,13 +233,20 @@ exports.ClientLog = (req, res) => {
                 res.json({
                   Verified: 'InActive'
                   })
-            }else{
-              let token = jwt.sign({
+            }if(Client.role != "Client"){
+              res.json({
+                role: Client.role
+                })
+          }else{
+
+            let token = jwt.sign({
                 login: login
               }, 'tokenkey', (err, token) => {
-                res.cookie("token", token)
+                res.cookie("token", token),
+                // res.cookie("role", role)
                 res.json({
-                  token: token
+                  token: token,
+                  role: Client.role
                 })
               })
             }
@@ -251,7 +258,7 @@ exports.ClientLog = (req, res) => {
           })
         } else {
           res.json({
-            message: 'Admin not found'
+            message: 'client not found'
           })
         }
       }).catch((err) => res.status(400).json("Error :" + err));
@@ -348,5 +355,14 @@ exports.Email = async (req, res) => {
   
        </div>
   `
+  })
+}
+
+
+exports.clientLogout = (req, res) => {
+  const deconnect = res.clearCookie('token')
+
+  res.json({
+      message: 'Client is Signout !!'
   })
 }

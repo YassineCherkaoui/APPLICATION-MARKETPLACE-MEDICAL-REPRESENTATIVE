@@ -17,7 +17,7 @@ app.use(bodyPrser.json())
 
 const logWinston = require('../SERVER/log/log');
 
-const multer = require('multer');
+// const multer = require('multer');
 
 
 
