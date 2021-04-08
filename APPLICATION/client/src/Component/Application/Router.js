@@ -58,7 +58,8 @@ import BidProduct from '../Sellers/BidSeller';
 
 
 
-
+// ______________CHAT__________________
+import chat from '../Chat/chat';
 
 
 
@@ -125,6 +126,13 @@ function Routes() {
         <PrivateRouteSeller  path="/BuyPack" exact component={buypack}/> 
 
         <PrivateRouteSeller  path="/BidProduct" exact component={BidProduct}/> 
+
+
+ {/* chat */}
+
+
+        <Route  path="/chat" exact component={chat}/> 
+
 
 
       </Switch>
