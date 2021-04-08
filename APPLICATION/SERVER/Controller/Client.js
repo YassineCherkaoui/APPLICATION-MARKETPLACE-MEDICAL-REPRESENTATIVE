@@ -203,12 +203,6 @@ exports.ClientActivated =  async(req, res) => {
    });
 }
 
-
-
-
-
-
-
 //-------------------------login Client-----------------------------
 exports.ClientLog = (req, res) => {
 
@@ -366,3 +360,4 @@ exports.clientLogout = (req, res) => {
       message: 'Client is Signout !!'
   })
 }
+

@@ -19,6 +19,9 @@ import ValidateAccount from '../Home/RalidateAccount';
 import addtocart from '../Home/addtocart';
 
 
+import exchange from '../Exchange/echange';
+import Bid from '../Exchange/PopUp';
+
 
 import test from '../../text';
 // ______________SUPERADMIN__________________
@@ -51,6 +54,16 @@ import Packs from '../Sellers/Packs';
 import buypack from '../Sellers/BuyPack';
 
 
+import BidProduct from '../Sellers/BidSeller';
+
+
+
+
+
+
+
+
+
 function Routes() {
   return (
 <BrowserRouter>
@@ -67,6 +80,20 @@ function Routes() {
            <Route  path="/test" exact component={test}/> 
            <Route  path="/addtocart" exact component={addtocart}/> 
            <Route exact path="/validateAccount/:token" component={ValidateAccount} />
+
+
+
+
+           <Route exact path="/Exchange" component={exchange} />
+
+
+           <Route exact path="/Bid" component={Bid} />
+
+
+
+
+
+
 
       {/* // ______________Client Route__________________ */}
         {/*Syper Admin Admins */}
@@ -96,6 +123,10 @@ function Routes() {
         <PrivateRouteSeller  path="/Packs" exact component={Packs}/> 
         <PrivateRouteSeller  path="/editProduct" exact component={EditeProduct}/> 
         <PrivateRouteSeller  path="/BuyPack" exact component={buypack}/> 
+
+        <PrivateRouteSeller  path="/BidProduct" exact component={BidProduct}/> 
+
+
       </Switch>
 </BrowserRouter>
   );

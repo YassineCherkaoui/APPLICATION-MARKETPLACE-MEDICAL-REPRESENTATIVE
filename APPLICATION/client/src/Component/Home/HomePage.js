@@ -6,17 +6,16 @@ import React from "react";
 function Home() {
 
   const IdClient=localStorage.getItem('IdClient');
+  const token=localStorage.getItem('token');
   
   const history = useHistory();
 //----------- show gategory added in datatable------------
 const [product , setProduct] = useState(null);
-const [ProductLentgh , setProductLentgh] = useState();
 useEffect(()=>{
 
   axios.get(`http://localhost:8080/products`)
     .then(function (response) {
       setProduct(response.data)
-      setProductLentgh(response.data.length)
     }).catch(function (err) {
       console.log(err);
   });
@@ -84,116 +83,11 @@ const logOutt =()=>{
 
 
 
-console.log(JSON.stringify(product) + "jjj");
-
-console.log(ProductLentgh);
-
-
-  const addToCart = i => {
-    setProduct(prevState =>
-      prevState.map((item, o) => {
-        if (i === o) {
-          return {
-            ...item,
-            inCart: true,
-            count: item.counterVal
-          };
-        }
-        return item;
-      })
-    );
-  };
-
-  const removeFromCart = i => {
-    setProduct(prevCart =>
-      prevCart.map((item, o) => {
-        if (i === o) {
-          return {
-            ...item,
-            count: 0,
-            counterVal: 1,
-            inCart: false
-          };
-        }
-        return item;
-      })
-    );
-  };
-
-  const cartCountTotal = product.reduce((acc, item) => acc + item.count, 0);
-
-  const cartTotals = () =>
-    cartCountTotal === 0 ? (
-      <b>Cart is empty</b>
-    ) : (
-      <>
-        <b>
-          <p>Items in Cart: {cartCountTotal}</p>
-          <p className="pt-1 text-gray-900">{cartCountTotal} MAD</p>
-        </b>
-      </>
-    );
-
-  const cartItems = product.map((item, i) => (
-    <React.Fragment key={item.Titel}>
-      {item.inCart && (
-        <>
-          <p>{item.Titel}</p>
-          <p className="pt-1 text-gray-900">{item.price} MAD</p>
-          <button onClick={() => removeFromCart(i)}>Remove From Cart</button>
-          <hr />
-        </>
-      )}
-    </React.Fragment>
-  ));
-
-  const cartProducts = () => (
-    <div className="flexParent">
-      {product.map((item, i) => (
-        <div key={item.Titel}>
-          <p>{item.Titel}</p>
-          <p className="pt-1 text-gray-900">{item.price} MAD</p>
-          {!item.inCart ? (
-            <>
-              <div className="w-full md:w-1/3 xl:w-1/4 p-6 flex flex-col">
-        <a href="/">
-
-
-          <img className="hover:grow hover:shadow-lg" alt="img" src={item.productImg} />
-          <div className="pt-3 flex items-center justify-between">
-            <p className>{item.Titel}</p>
-          </div>
-          <p className="pt-1 text-gray-900">{item.price} MAD</p>
-          <p className="pt-1 text-gray-900">By {item.idSeller}</p>
-          <p className="pt-1 text-gray-400">TAGS: {item.tags}</p>
-          <Link onClick={() => Checkout(item._id)}><button class="bg-green hover:bg-green-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow content-center w-40 mt-8 ml-2">
-            BUY
-        </button></Link>
-        <Link onClick={() => addToCart(i)}><button class="bg-green hover:bg-blue-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow content-center w-40 mt-8">
-            ADD TO CART
-        </button></Link> 
-        </a>
-      </div>
-
-
-
-
-
-            </>
-          ) : (
-            <p>
-              <b>Item added!</b>
-            </p>
-          )}
-        </div>
-      ))}
-    </div>
-  );
-
-
-
-
-
+const echange = () => {
+  localStorage.setItem("IdClient", IdClient);
+  localStorage.setItem("token", token);
+  history.push('/exchange');
+}
 
 
 
@@ -211,17 +105,6 @@ console.log(ProductLentgh);
 
   return (
     <div>
-
-
-
-
-<div>
-      <h1>useState() Cart</h1>
-      {cartItems}
-      {cartTotals()}
-      {cartProducts()}
-    </div>
-
 
   {/*Nav*/}
   <nav id="header" className="w-full z-30 top-0 py-1">
@@ -261,6 +144,9 @@ console.log(ProductLentgh);
         </a>
         <h1>Welcome <div id="content">{IdClient}</div> </h1>
 
+
+
+
         <a className="pl-3 inline-block no-underline hover:text-black" href="/">
           <svg className="fill-current hover:text-black" xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24">
             <path d="M21,7H7.462L5.91,3.586C5.748,3.229,5.392,3,5,3H2v2h2.356L9.09,15.414C9.252,15.771,9.608,16,10,16h8 c0.4,0,0.762-0.238,0.919-0.606l3-7c0.133-0.309,0.101-0.663-0.084-0.944C21.649,7.169,21.336,7,21,7z M17.341,14h-6.697L8.371,9 h11.112L17.341,14z" />
@@ -281,6 +167,15 @@ console.log(ProductLentgh);
 				<span class="ml-4 capitalize font-medium" id="test">Logout</span>
 			</a></Link>
        </span>
+
+
+       <span >
+      {/* <Link onClick={logOut} id="text"><a href="/log/Logout" class="flex items-center mt-8 ml-8" >LogOut</a></Link>  */}
+      <Link  onClick={echange} ><a href="/exchange" class="flex items-center">
+				<span class="ml-4 capitalize font-medium" id="test">Bid Page</span>
+			</a></Link>
+       </span>
+
     </div>
 
   </nav>

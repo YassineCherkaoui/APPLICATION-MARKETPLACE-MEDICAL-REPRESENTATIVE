@@ -1,6 +1,7 @@
 //__________________CALL MODEL____________________
 const Seller = require('../Models/Seller.models');
 const Product = require('../Models/Product.models');
+const Exchange = require('../Models/Exchange.model');
 //Call Packages JSON Web Token & BCRYPT
 const jwt=require('jsonwebtoken');
 //A library to help you hash passwords.
@@ -282,3 +283,60 @@ exports.sellerLogout = (req, res) => {
       message: 'SuperAdmin is Signout !!'
   })
 }
+
+
+
+
+
+//_________________________________________________________________
+
+
+
+//______________________Add Exchange Product_____________________ 
+exports.productExchangeAdd = (req,res) =>{
+  const exchange = new Exchange({
+    productImg: req.body.productImg,
+    Titel: req.body.Titel,
+    category: req.body.category,
+    price: req.body.price,
+    LastPrice: req.body.LastPrice,
+    discription: req.body.discription,
+    idSeller: req.body.idSeller,
+    currentDate: date,
+    stopTime : req.body.stopTime,
+    idBid : req.body.idSeller,
+    datestope : req.body.datestope
+                    });
+//Save
+exchange.save()
+.then(() => res.status(201).json("Product Exchange ADDED successfully"))
+.catch((err) => res.status(400).json("Error :" + err));
+
+};
+
+//______________________get all Exchange Product_____________________ 
+exports.ExchangeProductList = (req, res) => {
+  Exchange.find()
+  .then(ExchangeInfos => {
+        res.status(200).json(ExchangeInfos);
+      }).catch(error => {
+        console.log(error);
+        res.status(500).json({
+            message: "Error!",
+            error: error
+        });
+      });
+};
+
+//________________________updating Product____________________
+exports.UpdateBid = (req, res) => {
+  // Find Product By ID and update it
+  Exchange.updateOne({
+      _id: req.params.id
+    }, {
+      LastPrice : req.body.LastPrice,
+      idBid : req.body.idBid
+    })
+    .then(() => res.status(201).json("Bid updated successfully"))
+    .catch((err) => res.status(400).json("Error :" + err));
+};

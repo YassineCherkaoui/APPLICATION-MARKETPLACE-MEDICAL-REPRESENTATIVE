@@ -40,4 +40,35 @@ module.exports = function (app) {
 
                 //-------------------------Logout superAdmin-----------------------------
                 app.get('/seller/logout', seller.sellerLogout);
+
+
+
+
+
+
+
+
+//______________________________________________________________
+
+
+
+
+    //-------------------------Add Product-----------------------------
+    app.post('/seller/product/Echange/add', seller.productExchangeAdd);
+
+
+
+    //-------------------------Get Product-----------------------------
+    app.get('/seller/product/Echange', seller.ExchangeProductList);
+
+    
+      //-------------------------Product Update-----------------------------
+      app.put('/bid/update/:id', seller.UpdateBid);
+
+
+
+
+
+
+                
 }
