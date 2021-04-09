@@ -306,3 +306,5 @@ Project Link: [https://github.com/YassineCherkaoui/APPLICATION-MARKETPLACE-MEDIC
 [SuperAdmin]: images/SuperAdmin.png
 
 [chat]: images/chat.png
+
+[logo]: images/logo.png
