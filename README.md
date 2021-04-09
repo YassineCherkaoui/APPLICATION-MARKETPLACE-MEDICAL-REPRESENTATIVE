@@ -61,20 +61,20 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][admin]](https://github.com/YassineCherkaoui/APPLICATION-MARKETPLACE-MEDICAL-REPRESENTATIVE)
+[![admin][admin]](https://github.com/YassineCherkaoui/APPLICATION-MARKETPLACE-MEDICAL-REPRESENTATIVE)
 
 
-[![Product Name Screen Shot][chat]](https://github.com/YassineCherkaoui/APPLICATION-MARKETPLACE-MEDICAL-REPRESENTATIVE)
+[![chat][chat]](https://github.com/YassineCherkaoui/APPLICATION-MARKETPLACE-MEDICAL-REPRESENTATIVE)
 
-[![Product Name Screen Shot][exchange]](https://github.com/YassineCherkaoui/APPLICATION-MARKETPLACE-MEDICAL-REPRESENTATIVE)
+[![exchange][exchange]](https://github.com/YassineCherkaoui/APPLICATION-MARKETPLACE-MEDICAL-REPRESENTATIVE)
 
-[![Product Name Screen Shot][sellerdash]](https://github.com/YassineCherkaoui/APPLICATION-MARKETPLACE-MEDICAL-REPRESENTATIVE)
+[![sellerdash][sellerdash]](https://github.com/YassineCherkaoui/APPLICATION-MARKETPLACE-MEDICAL-REPRESENTATIVE)
 
-[![Product Name Screen Shot][statistic]](https://github.com/YassineCherkaoui/APPLICATION-MARKETPLACE-MEDICAL-REPRESENTATIVE)
+[![statistic][statistic]](https://github.com/YassineCherkaoui/APPLICATION-MARKETPLACE-MEDICAL-REPRESENTATIVE)
 
-[![Product Name Screen Shot][SuperAdmin]](https://github.com/YassineCherkaoui/APPLICATION-MARKETPLACE-MEDICAL-REPRESENTATIVE)
+[![SuperAdmin][SuperAdmin]](https://github.com/YassineCherkaoui/APPLICATION-MARKETPLACE-MEDICAL-REPRESENTATIVE)
 
-[![Product Name Screen Shot][chat]](https://github.com/YassineCherkaoui/APPLICATION-MARKETPLACE-MEDICAL-REPRESENTATIVE)
+
 
 # APPLICATION-MARKETPLACE-MEDICAL-REPRESENTATIVE
 MarketPlace (Délégué Médical) Using React And Nodejs / API 
