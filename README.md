@@ -72,7 +72,6 @@
 
 [![statistic][statistic]](https://github.com/YassineCherkaoui/APPLICATION-MARKETPLACE-MEDICAL-REPRESENTATIVE)
 
-[![SuperAdmin][SuperAdmin]](https://github.com/YassineCherkaoui/APPLICATION-MARKETPLACE-MEDICAL-REPRESENTATIVE)
 
 
 
